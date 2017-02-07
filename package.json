@@ -4,7 +4,7 @@
   "description": "Babel plugin to extract strings from React and gettext-like functions into PO",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha --compilers js:babel-core/register"
   },
   "author": "rtymchyk",
   "repository": {
@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "babel-cli": "^6.22.2",
+    "babel-preset-es2015": "^6.22.0",
     "babel-preset-react": "^6.22.0",
     "chai": "^3.5.0",
     "decache": "^4.1.0",
