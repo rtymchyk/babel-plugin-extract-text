@@ -1,12 +1,16 @@
 {
-  "name": "react-translations",
+  "name": "babel-extract-gettext",
   "version": "0.0.1",
-  "description": "Extract gettext style strings from React",
+  "description": "Babel plugin to extract strings from React and gettext-like functions into PO",
   "main": "index.js",
   "scripts": {
     "test": "mocha"
   },
   "author": "rtymchyk",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rtymchyk/babel-extract-gettext.git"
+  },
   "keywords": [
     "i18n",
     "extract",
@@ -16,6 +20,9 @@
     "plugin",
     "react"
   ],
+  "engines": {
+    "node": ">=v6.9.4"
+  },
   "license": "MIT",
   "dependencies": {
     "babel-core": "^6.22.1",
