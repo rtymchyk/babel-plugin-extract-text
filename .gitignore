@@ -1,0 +1,4 @@
+*.po
+*.pot
+node_modules
+.eslintrc
