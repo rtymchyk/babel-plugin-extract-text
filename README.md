@@ -75,3 +75,12 @@ This plugin allows a number of options to be passed:
 - `charset`: Character set for the PO (default `UTF-8`)
 - `headers`: Object indicating all PO headers to include (default none).
 - `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See https://github.com/rtymchyk/babel-extract-gettext/blob/master/arguments.js#L6 for all defaults.
+
+### FAQ (Next Steps)
+1. How do I get these React components/functions to actually translate strings?
+  
+  You'll need to build these out and hook them up to a basic gettext client. Check out [Jed](https://github.com/messageformat/Jed).
+
+2. How do I use a translated PO given back to me by translators?
+  
+  Check out [po2json](https://github.com/mikeedwards/po2json) to convert it to JSON, and serve the JSON as message bundles to clients to load into Jed.
