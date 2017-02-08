@@ -1,4 +1,4 @@
-# babel-extract-gettext [![CircleCI](https://circleci.com/gh/rtymchyk/babel-extract-gettext.svg?style=svg)](https://circleci.com/gh/rtymchyk/babel-extract-gettext)
+# babel-extract-gettext [![npm version](https://badge.fury.io/js/babel-extract-gettext.svg)](https://badge.fury.io/js/babel-extract-gettext) [![CircleCI](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg)](https://circleci.com/gh/rtymchyk/babel-extract-gettext)
 Babel plugin to extract strings from React components and gettext-like functions into a gettext PO file.
 
 ## Features
