@@ -1,10 +1,10 @@
 {
   "name": "babel-extract-gettext",
   "version": "0.0.1",
-  "description": "Babel plugin to extract strings from React and gettext-like functions into a PO file",
+  "description": "Babel plugin to extract strings from React and gettext-like functions into a PO file.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register"
+    "test": "NODE_ENV=test mocha --compilers js:babel-core/register"
   },
   "author": "rtymchyk",
   "repository": {

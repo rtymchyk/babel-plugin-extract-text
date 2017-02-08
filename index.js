@@ -2,7 +2,8 @@
 const gettextParser = require('gettext-parser');
 const fs = require('fs');
 
-const PLUGIN_KEY = './index.js';
+const PLUGIN_KEY = process.env.NODE_ENV === 'test'
+  ? './index.js' : 'babel-extract-gettext';
 const DEFAULT_OUTPUT_FILE = 'strings.po';
 
 const {
