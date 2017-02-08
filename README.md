@@ -1,14 +1,14 @@
 # babel-extract-gettext [![CircleCI](https://circleci.com/gh/rtymchyk/babel-extract-gettext.svg?style=svg)](https://circleci.com/gh/rtymchyk/babel-extract-gettext)
 Babel plugin to extract strings from React components and gettext-like functions into a gettext PO file.
 
-### Features
+## Features
 - Extraction from gettext-like call expressions (e.g. `_('Hello World')`)
 - Extraction from React components (e.g. `<LocalizedString id="Hello World"/>`)
 - Customizable extraction (e.g. component name, function names and argument positions)
 - Supports PO translator comments and context (comments only for components)
 - Validation (e.g. props missing on component, non-string literals are used for call expression arguments)
 
-### Example
+## Example
 Plugin Configuration
 ```javascript
 const babel = require('babel-core');
@@ -65,7 +65,7 @@ msgid "Flag"
 msgstr ""
 ```
 
-### Setup
+## Setup
 You must use the `syntax-jsx` plugin along with this one to be able to extract strings from JSX (React). See example above.
 
 #### Plugin Configurations
@@ -76,7 +76,7 @@ This plugin allows a number of options to be passed:
 - `headers`: Object indicating all PO headers to include (default none).
 - `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See https://github.com/rtymchyk/babel-extract-gettext/blob/master/arguments.js#L6 for all defaults.
 
-### FAQ (Next Steps)
+## Next Steps
 1. <strong>How do I get these React components/functions to actually translate strings?</strong>
   
   You'll need to build these out and hook them up to a basic gettext client. Check out [Jed](https://github.com/messageformat/Jed).
@@ -85,7 +85,7 @@ This plugin allows a number of options to be passed:
   
   Check out [po2json](https://github.com/mikeedwards/po2json) to convert it to JSON, and serve the JSON as message bundles to clients to load into Jed.
   
-### Motivation
+## Motivation
 1. <strong>Why not use ICU MessageFormat?</strong>
   
   ICU patterns strings are powerful, but are very clunky. Gettext style strings should be enough to cover the typical use cases. More importantly, ICU strings are not always supported by translators and translation providers, whereas PO strings are a de facto standard.
