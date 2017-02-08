@@ -77,10 +77,21 @@ This plugin allows a number of options to be passed:
 - `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See https://github.com/rtymchyk/babel-extract-gettext/blob/master/arguments.js#L6 for all defaults.
 
 ### FAQ (Next Steps)
-1. How do I get these React components/functions to actually translate strings?
+1. <strong>How do I get these React components/functions to actually translate strings?</strong>
   
   You'll need to build these out and hook them up to a basic gettext client. Check out [Jed](https://github.com/messageformat/Jed).
 
-2. How do I use a translated PO given back to me by translators?
+2. <strong>How do I use a translated PO given back to me by translators?</strong>
   
   Check out [po2json](https://github.com/mikeedwards/po2json) to convert it to JSON, and serve the JSON as message bundles to clients to load into Jed.
+  
+### Motivation
+Motivation
+1. <strong>Why not use ICU MessageFormat?</strong>
+  ICU patterns strings are powerful, but are very clunky. Gettext style strings should be enough to cover the typical use cases. More importantly, ICU strings are not always supported by translators and translation providers, whereas PO strings are a de facto standard.
+
+2. <strong>Why not use xgettext to extract?</strong>
+  Among a number of reasons, xgettext will only support extraction from call expressions.
+
+3. <strong>Why not use a simple JSON format for strings or format X?</strong>
+  Many extraction tools invent their own format, or use a basic JSON structure, which is either too simple (e.g. not able to support pluralization) and/or not translator friendly (translators are used to working with certain formats). Gettext/PO is a proven method for translation that satisfies all stakeholders (translators, developers, product, and user).
