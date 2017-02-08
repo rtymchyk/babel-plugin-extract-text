@@ -42,7 +42,7 @@ Input (`someCode.js`)
 
 _c('Flag', 'Physical Object');
  ```
-  
+
 Output (`en-US.po`)
 ```
 msgid ""
@@ -78,22 +78,25 @@ This plugin allows a number of options to be passed:
 
 ## Next Steps
 1. <strong>How do I get these React components/functions to actually translate strings?</strong>
-  
+
   You'll need to build these out and hook them up to a basic gettext client. Check out [Jed](https://github.com/messageformat/Jed).
 
 2. <strong>How do I use a translated PO given back to me by translators?</strong>
-  
+
   Check out [po2json](https://github.com/mikeedwards/po2json) to convert it to JSON, and serve the JSON as message bundles to clients to load into Jed.
-  
+
 ## Motivation
 1. <strong>Why not use ICU MessageFormat?</strong>
-  
+
   ICU patterns strings are powerful, but are very clunky. Gettext style strings should be enough to cover the typical use cases. More importantly, ICU strings are not always supported by translators and translation providers, whereas PO strings are a de facto standard.
 
 2. <strong>Why not use xgettext to extract?</strong>
-  
+
   Among a number of reasons, xgettext will only support extraction from call expressions.
 
 3. <strong>Why not use a simple JSON format for strings or format X?</strong>
- 
+
   Many extraction tools invent their own format, or use a basic JSON structure, which is either too simple (e.g. not able to support pluralization) and/or not translator friendly (translators are used to working with certain formats). Gettext/PO is a proven method for translation that satisfies all stakeholders (translators, developers, product, and user).
+
+## Credits
+Thanks to the folks over at Sentry for their [blog post](https://blog.sentry.io/2016/01/07/react-i18n.html), and their [extractor](https://github.com/getsentry/babel-gettext-extractor) that served as an inspiration for me to utilize Babel to extend the extraction process to React.
