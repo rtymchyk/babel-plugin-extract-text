@@ -86,7 +86,6 @@ This plugin allows a number of options to be passed:
   Check out [po2json](https://github.com/mikeedwards/po2json) to convert it to JSON, and serve the JSON as message bundles to clients to load into Jed.
   
 ### Motivation
-Motivation
 1. <strong>Why not use ICU MessageFormat?</strong>
   ICU patterns strings are powerful, but are very clunky. Gettext style strings should be enough to cover the typical use cases. More importantly, ICU strings are not always supported by translators and translation providers, whereas PO strings are a de facto standard.
 
