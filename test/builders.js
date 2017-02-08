@@ -138,16 +138,33 @@ describe('Builders', () => {
         .to.equal('somefile.js');
     });
 
-    it('includes charset and headers if included', () => {
+    it('includes default charset and headers if included', () => {
       const charset = 'UTF-8';
-      const headers = {
+      const expectedHeaders = {
         'content-type': 'text/plain; charset=UTF-8',
         'plural-forms': 'nplurals=2; plural=(n!=1);',
+        'language': 'en_US',
       };
-      const result = mergeEntries({ charset, headers }, []);
+      const result = mergeEntries({}, []);
 
-      expect(result.charset).to.equal('UTF-8');
-      expect(result.headers).to.deep.equal(headers);
+      expect(result.charset).to.equal(charset);
+      expect(result.headers).to.deep.equal(expectedHeaders);
+    });
+
+    it('allows overriding/including headers and charset', () => {
+      const charset = 'XYZ';
+      const headers = {
+        'content-type': 'text/plain; charset=XYZ',
+      };
+      const expectedHeaders = {
+        'content-type': 'text/plain; charset=XYZ',
+        'plural-forms': 'nplurals=2; plural=(n!=1);',
+        'language': 'en_US',
+      };
+
+      const result = mergeEntries({ charset, headers }, []);
+      expect(result.charset).to.equal(charset);
+      expect(result.headers).to.deep.equal(expectedHeaders);
     });
 
     it('appends new references if same entry key', () => {

@@ -16,6 +16,13 @@ const {
   validateComponentEntry,
 } = require('./validators');
 
+const DEFAULT_CHARSET = 'UTF-8';
+const DEFAULT_HEADERS = {
+  'content-type': 'text/plain; charset=UTF-8',
+  'plural-forms': 'nplurals=2; plural=(n!=1);',
+  'language': 'en_US',
+};
+
 function buildSingularEntry(args, types, path, state) {
   const func = getSingularFunction(state);
   const msgid = args[func.singular];
@@ -143,8 +150,8 @@ module.exports = {
 
   mergeEntries(args, entries) {
     const data = {
-      charset: args.charset,
-      headers: args.headers,
+      charset: args.charset || DEFAULT_CHARSET,
+      headers: Object.assign({}, DEFAULT_HEADERS, args.headers),
       translations: {},
     };
 
