@@ -14,10 +14,10 @@ const {
 
 const TESTPO = 'test.po';
 const OPTIONS = {
-  presets: ['react'],
-  plugins: [['./index.js', {
-    outputFile: TESTPO,
-  }]],
+  plugins: [
+    'syntax-jsx',
+    ['./index.js', { outputFile: TESTPO }],
+  ],
 };
 
 afterEach(() => {
@@ -106,16 +106,18 @@ describe('Plugin Configuration', () => {
     babel.transform(
       '<Msg msgid="1 Cat" msgid_plural="Many Cats" msgctxt="SomeContext"/>',
       {
-        presets: ['react'],
-        plugins: [['./index.js', {
-          outputFile: TESTPO,
-          component: {
-            name: 'Msg',
-            singular: 'msgid',
-            plural: 'msgid_plural',
-            context: 'msgctxt',
-          },
-        }]],
+        plugins: [
+          'syntax-jsx',
+          ['./index.js', {
+            outputFile: TESTPO,
+            component: {
+              name: 'Msg',
+              singular: 'msgid',
+              plural: 'msgid_plural',
+              context: 'msgctxt',
+            },
+          }],
+        ],
       }
     );
     const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
@@ -132,33 +134,34 @@ describe('Plugin Configuration', () => {
         msgpc(locale, 'One', 'Many', 5, 'People');
       `,
       {
-        presets: ['react'],
-        plugins: [['./index.js', {
-          outputFile: TESTPO,
-          function: [
-            {
-              type: 'SINGULAR',
-              name: 'msg',
-              singular: 1,
-            }, {
-              type: 'PLURAL',
-              name: 'msgp',
-              singular: 1,
-              plural: 2,
-            }, {
-              type: 'SINGULAR_CONTEXT',
-              name: 'msgc',
-              singular: 1,
-              context: 2,
-            }, {
-              type: 'PLURAL_CONTEXT',
-              name: 'msgpc',
-              singular: 1,
-              plural: 2,
-              context: 4,
-            },
-          ],
-        }]],
+        plugins: ['syntax-jsx',
+          ['./index.js', {
+            outputFile: TESTPO,
+            function: [
+              {
+                type: 'SINGULAR',
+                name: 'msg',
+                singular: 1,
+              }, {
+                type: 'PLURAL',
+                name: 'msgp',
+                singular: 1,
+                plural: 2,
+              }, {
+                type: 'SINGULAR_CONTEXT',
+                name: 'msgc',
+                singular: 1,
+                context: 2,
+              }, {
+                type: 'PLURAL_CONTEXT',
+                name: 'msgpc',
+                singular: 1,
+                plural: 2,
+                context: 4,
+              },
+            ],
+          }],
+        ],
       }
     );
     const po = gettextParser.po.parse(fs.readFileSync(TESTPO));

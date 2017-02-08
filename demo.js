@@ -1,8 +1,8 @@
 const babel = require('babel-core');
 
 babel.transformFile('sampleCode.js', {
-  presets: ['react'],
   plugins: [
+    'syntax-jsx', // Required to be able to parse JSX
     ['./index.js', {
       outputFile: 'en-US.po',
       includeReference: true,
