@@ -87,10 +87,13 @@ This plugin allows a number of options to be passed:
   
 ### Motivation
 1. <strong>Why not use ICU MessageFormat?</strong>
+  
   ICU patterns strings are powerful, but are very clunky. Gettext style strings should be enough to cover the typical use cases. More importantly, ICU strings are not always supported by translators and translation providers, whereas PO strings are a de facto standard.
 
 2. <strong>Why not use xgettext to extract?</strong>
+  
   Among a number of reasons, xgettext will only support extraction from call expressions.
 
 3. <strong>Why not use a simple JSON format for strings or format X?</strong>
+ 
   Many extraction tools invent their own format, or use a basic JSON structure, which is either too simple (e.g. not able to support pluralization) and/or not translator friendly (translators are used to working with certain formats). Gettext/PO is a proven method for translation that satisfies all stakeholders (translators, developers, product, and user).
