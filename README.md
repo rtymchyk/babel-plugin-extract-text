@@ -2,10 +2,10 @@
 Babel plugin to extract strings from React components and gettext-like functions into a gettext PO file.
 
 ## Features
-- Extraction from gettext-like call expressions (e.g. `_('Hello World')`)
+- Extraction from gettext-like functions (e.g. `_('Hello World')`)
 - Extraction from React components (e.g. `<LocalizedString id="Hello World"/>`)
-- Customizable extraction (e.g. component name, function names and argument positions)
-- Supports PO translator comments and context (comments only for components)
+- Customizable extraction (e.g. component name, function names and function argument positions)
+- Supports translator comments and context (comments are only available for components)
 - Validation (e.g. props missing on component, non-string literals are used for call expression arguments)
 
 ## Example
@@ -19,11 +19,7 @@ babel.transformFile('someCode.js', {
     ['babel-extract-gettext', {
       outputFile: 'en-US.po',
       includeReference: true,
-      charset: 'UTF-8',
       headers: {
-        'content-type': 'text/plain; charset=UTF-8',
-        'plural-forms': 'nplurals=2; plural=(n!=1);',
-        'language': 'en_US',
         'po-revision-date': new Date().toISOString(),
       },
     }],
@@ -66,21 +62,19 @@ msgstr ""
 ```
 
 ## Setup
-First: `npm install babel-extract-gettext babel-plugin-syntax-jsx`
+1. `npm install babel-extract-gettext babel-plugin-syntax-jsx`
+2. In babel configuration: `{ plugins: ['syntax-jsx', ['babel-extract-gettext', { ... options ... }]] }`
 
-Then, in babel configuration:
-`{ plugins: ['syntax-jsx', ['babel-extract-gettext', options]] }`
-
-`babel-plugin-syntax-jsx` plugin is required only if you want to extract strings from JSX (React).
+  <em>`babel-plugin-syntax-jsx` plugin is required only if you want to extract strings from JSX/React)</em>
 
 #### Options
 This plugin allows a number of configurations to be passed:
 - `outputFile`: Output PO file (default `strings.po`)
-- `includeReference`: File name reference for PO entries (default `false`). May help clean up diffs for the PO file.
+- `includeReference`: Whether to include a file reference for PO entries (default `false`)
 - `baseDir`: Root directory of project. Everything up to and including this will be stripped from entry references.
 - `charset`: Character set for the PO (default `UTF-8`)
-- `headers`: Object indicating all PO headers to include (default none).
-- `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See the [defaults](https://github.com/rtymchyk/babel-extract-gettext/blob/master/arguments.js) for more details.
+- `headers`: Object indicating all PO headers to include. See the default headers [here](https://github.com/rtymchyk/babel-extract-gettext/blob/master/builders.js#L20).
+- `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See the default configuration [here](https://github.com/rtymchyk/babel-extract-gettext/blob/master/arguments.js).
 
 ## Next Steps
 1. <strong>How do I get these React components/functions to actually translate strings?</strong>
@@ -104,5 +98,5 @@ This plugin allows a number of configurations to be passed:
 
   Many extraction tools invent their own format, or use a basic JSON structure, which is either too simple (e.g. not able to support pluralization) and/or not translator friendly (translators are used to working with certain formats). Gettext/PO is a proven method for translation that satisfies all stakeholders (translators, developers, product, and user).
 
-## Credits
-Thanks to the folks over at Sentry for their [blog post](https://blog.sentry.io/2016/01/07/react-i18n.html), and their [extractor](https://github.com/getsentry/babel-gettext-extractor) that served as an inspiration for me to utilize Babel to extend the extraction process to React.
+## Other
+Thanks to the folks over at Sentry for their [blog post](https://blog.sentry.io/2016/01/07/react-i18n.html), and their [extractor](https://github.com/getsentry/babel-gettext-extractor) tool, both of which served as an inspiration for me to utilize Babel to extend the extraction process to React.
