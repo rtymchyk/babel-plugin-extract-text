@@ -12,11 +12,6 @@ const {
   mergeEntries,
 } = require('./builders');
 
-function addReference(entry, state) {
-  entry.reference = state.file.opts.filename;
-  return entry;
-}
-
 module.exports = ({ types }) => {
   const entries = [];
 
@@ -24,11 +19,11 @@ module.exports = ({ types }) => {
     visitor: {
       CallExpression(path, state) {
         const entry = buildCallExpressionEntry(types, path, state);
-        if (entry) entries.push(addReference(entry, state));
+        if (entry) entries.push(entry);
       },
       JSXElement(path, state) {
         const entry = buildJSXElementEntry(types, path, state);
-        if (entry) entries.push(addReference(entry, state));
+        if (entry) entries.push(entry);
       },
     },
     post(state) {
@@ -36,11 +31,11 @@ module.exports = ({ types }) => {
         return plugin[0].key === PLUGIN_KEY;
       })[0];
       const args = thisPlugin[1] || {};
-      const file = args.outputFile || DEFAULT_OUTPUT_FILE;
-      const data = mergeEntries(args, entries);
-      const po = gettextParser.po.compile(data);
+      const outputFile = args.outputFile || DEFAULT_OUTPUT_FILE;
+      const poRawData = mergeEntries(args, entries);
+      const po = gettextParser.po.compile(poRawData);
 
-      fs.writeFileSync(file, po);
+      fs.writeFileSync(outputFile, po);
     },
   };
 };

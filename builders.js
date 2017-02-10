@@ -96,23 +96,48 @@ function mergeTranslation(existingTranslation, newTranslation) {
   return newTranslation;
 }
 
+function buildReference(entry, state) {
+  if (entry && state.opts.includeReference) {
+    const rawFilename = state.file.opts.filename;
+    const baseDirRaw = state.opts.baseDir;
+
+    if (baseDirRaw) {
+      const baseDir = `/${baseDirRaw.replace('/', '')}/`;
+      const baseDirIndex = rawFilename.indexOf(baseDir);
+
+      if (baseDirIndex !== -1) {
+        entry.reference = rawFilename.substr(
+          baseDirIndex + baseDir.length, rawFilename.length);
+        return entry;
+      }
+    }
+
+    entry.reference = rawFilename;
+  }
+
+  return entry;
+}
+
 module.exports = {
   buildCallExpressionEntry(types, path, state) {
     const args = path.node.arguments;
     const callee = path.node.callee.name;
+    let entry;
 
     switch (callee) {
     case getSingularFunction(state).name:
-      return buildSingularEntry(args, types, path, state);
+      entry = buildSingularEntry(args, types, path, state); break;
     case getSingularContextFunction(state).name:
-      return buildSingularContextEntry(args, types, path, state);
+      entry = buildSingularContextEntry(args, types, path, state); break;
     case getPluralFunction(state).name:
-      return buildPluralEntry(args, types, path, state);
+      entry = buildPluralEntry(args, types, path, state); break;
     case getPluralContextFunction(state).name:
-      return buildPluralContextEntry(args, types, path, state);
+      entry = buildPluralContextEntry(args, types, path, state); break;
     default:
       break;
     }
+
+    return buildReference(entry, state);
   },
 
   buildJSXElementEntry(types, path, state) {
@@ -144,7 +169,7 @@ module.exports = {
       });
 
       validateComponentEntry(entry, types, path, state);
-      return entry;
+      return buildReference(entry, state);
     }
   },
 
@@ -156,10 +181,8 @@ module.exports = {
     };
 
     entries.forEach(entry => {
-      const { msgid, msgid_plural, msgctxt, extracted } = entry;
+      const { msgid, msgid_plural, msgctxt, extracted, reference } = entry;
       const context = entry.msgctxt || '';
-      const reference = args.includeReference
-        ? entry.reference : undefined;
 
       const existingContext = data.translations[context];
       if (!existingContext) data.translations[context] = {};
@@ -190,4 +213,6 @@ module.exports = {
 
     return data;
   },
+
+  buildReference,
 };

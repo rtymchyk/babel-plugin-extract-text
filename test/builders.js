@@ -1,6 +1,7 @@
 const {
   buildCallExpressionEntry,
   buildJSXElementEntry,
+  buildReference,
   mergeEntries,
 } = require('../builders');
 const chai = require('chai');
@@ -8,7 +9,16 @@ const sinon = require('sinon');
 const expect = chai.expect;
 
 describe('Builders', () => {
-  const state = sinon.stub();
+  const state = {
+    file: {
+      opts: {
+        filename: '/Users/rtymchyk/projects/project/js/code.js',
+      },
+    },
+    opts: {
+      includeReference: false,
+    },
+  };
   const types = {
     isStringLiteral: sinon.stub().returns(true),
   };
@@ -122,22 +132,6 @@ describe('Builders', () => {
   });
 
   describe('mergeEntries', () => {
-    it('does not include reference if disabled', () => {
-      const result = mergeEntries({ includeReference: false }, [
-        { msgid: 'Hello', reference: 'somefile.js' },
-      ]);
-      expect(result.translations[''].Hello.comments.reference)
-        .to.equal(undefined);
-    });
-
-    it('includes reference if enabled', () => {
-      const result = mergeEntries({ includeReference: true }, [
-        { msgid: 'Hello', reference: 'somefile.js' },
-      ]);
-      expect(result.translations[''].Hello.comments.reference)
-        .to.equal('somefile.js');
-    });
-
     it('includes default charset and headers if included', () => {
       const charset = 'UTF-8';
       const expectedHeaders = {
@@ -176,6 +170,16 @@ describe('Builders', () => {
 
       expect(result.translations[''].Hello.comments.reference).to.equal(
         'somefile.js\nsomefile2.js\nsomefile3.js');
+    });
+
+    it('does not append new reference if same reference', () => {
+      const result = mergeEntries({ includeReference: true }, [
+        { msgid: 'Hello', reference: 'somefile.js' },
+        { msgid: 'Hello', reference: 'somefile.js' },
+      ]);
+
+      expect(result.translations[''].Hello.comments.reference).to.equal(
+        'somefile.js');
     });
 
     it('inserts new context key if does not exist', () => {
@@ -253,6 +257,53 @@ describe('Builders', () => {
       expect(entry.msgid).to.equal('One');
       expect(entry.msgid_plural).to.equal('Many');
       expect(entry.msgstr).to.deep.equal(['', '']);
+    });
+  });
+
+  describe('buildReference', () => {
+    it('does not include reference if disabled', () => {
+      const result = buildReference(
+        { msgid: 'Hello' },
+        Object.assign({}, state, { opts: { includeReference: false }}));
+
+      expect(result.reference).to.equal(undefined);
+    });
+
+    it('includes reference if enabled', () => {
+      const result = buildReference(
+        { msgid: 'Hello' },
+        Object.assign({}, state, { opts: { includeReference: true }}));
+
+      expect(result.reference)
+        .to.equal('/Users/rtymchyk/projects/project/js/code.js');
+    });
+
+    it('strips up to base directory from reference if found', () => {
+      const result = buildReference(
+        { msgid: 'Hello' },
+        Object.assign({}, state, {
+          opts: {
+            includeReference: true,
+            baseDir: 'project',
+          },
+        }));
+
+      expect(result.reference).to.equal('js/code.js');
+    });
+
+    it('uses file name as entry reference if base directory not found', () => {
+      const result = buildReference(
+        { msgid: 'Hello' },
+        Object.assign({}, state, {
+          includeReference: true,
+          opts: {
+            includeReference: true,
+            baseDir: 'x',
+          },
+        }));
+
+      expect(result.reference).to.equal(
+        '/Users/rtymchyk/projects/project/js/code.js');
     });
   });
 });
