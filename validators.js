@@ -7,7 +7,7 @@ module.exports = {
   validateFuncArg(arg, argIndex, funcName, types, path) {
     if (!types.isStringLiteral(arg)) {
       throw path.buildCodeFrameError(
-        `Function ${funcName} must have a String literal for argument #${argIndex + 1}!`);
+        `Function ${funcName} must have a String literal for argument #${argIndex + 1}, found ${arg.type} instead!`);
     }
 
     return arg.value;

@@ -24,13 +24,13 @@ describe('Validators', () => {
 
     it('throws error if arg is not a String literal', () => {
       try {
-        validateFuncArg({ value: 1 }, 0, '_', {
+        validateFuncArg({ value: 1, type: 'Identifier' }, 0, '_', {
           isStringLiteral: sinon.stub().returns(false),
         }, path);
         fail();
       } catch (error) {
         expect(path.buildCodeFrameError.calledWith(
-          'Function _ must have a String literal for argument #1!'))
+          'Function _ must have a String literal for argument #1, found Identifier instead!'))
           .to.equal(true);
       }
     });
