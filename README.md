@@ -8,6 +8,21 @@ Babel plugin to extract strings from React components and gettext-like functions
 - Supports translator comments and context (comments are only available for components)
 - Validation (e.g. props missing on component, non-string literals are used for call expression arguments)
 
+## Setup
+1. `npm install babel-extract-gettext babel-plugin-syntax-jsx`
+2. In babel configuration: `{ plugins: ['syntax-jsx', ['babel-extract-gettext', { ... options ... }]] }`
+
+  <em>`babel-plugin-syntax-jsx` plugin is required only if you want to extract strings from JSX/React</em>
+
+#### Options
+This plugin allows a number of configurations to be passed:
+- `outputFile`: Output PO file (default `strings.po`)
+- `includeReference`: Whether to include a file reference for PO entries (default `false`)
+- `baseDir`: Root directory of project. Everything up to and including this will be stripped from entry references.
+- `charset`: Character set for the PO (default `UTF-8`)
+- `headers`: Object indicating all PO headers to include. See the default headers [here](https://github.com/rtymchyk/babel-extract-gettext/blob/master/builders.js#L20).
+- `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See the default configuration [here](https://github.com/rtymchyk/babel-extract-gettext/blob/master/arguments.js).
+
 ## Example
 Plugin Configuration
 ```javascript
@@ -15,12 +30,19 @@ const babel = require('babel-core');
 
 babel.transformFile('someCode.js', {
   plugins: [
-    'syntax-jsx', // Required to be able to parse JSX
+    'syntax-jsx',
     ['babel-extract-gettext', {
       outputFile: 'en-US.po',
       includeReference: true,
       headers: {
         'po-revision-date': new Date().toISOString(),
+      },
+      component: {
+        name: 'Message',
+        singular: 'id',
+        plural: 'idPlural',
+        context: 'context',
+        comment: 'comment',
       },
     }],
   ],
@@ -29,7 +51,7 @@ babel.transformFile('someCode.js', {
 
 Input (`someCode.js`)
 ```javascript
-<LocalizedString
+<Message
     id="You have a cat."
     idPlural="You have {cats} cats!"
     comment="User profile description for a public profile"
@@ -60,21 +82,6 @@ msgctxt "Physical Object"
 msgid "Flag"
 msgstr ""
 ```
-
-## Setup
-1. `npm install babel-extract-gettext babel-plugin-syntax-jsx`
-2. In babel configuration: `{ plugins: ['syntax-jsx', ['babel-extract-gettext', { ... options ... }]] }`
-
-  <em>`babel-plugin-syntax-jsx` plugin is required only if you want to extract strings from JSX/React)</em>
-
-#### Options
-This plugin allows a number of configurations to be passed:
-- `outputFile`: Output PO file (default `strings.po`)
-- `includeReference`: Whether to include a file reference for PO entries (default `false`)
-- `baseDir`: Root directory of project. Everything up to and including this will be stripped from entry references.
-- `charset`: Character set for the PO (default `UTF-8`)
-- `headers`: Object indicating all PO headers to include. See the default headers [here](https://github.com/rtymchyk/babel-extract-gettext/blob/master/builders.js#L20).
-- `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See the default configuration [here](https://github.com/rtymchyk/babel-extract-gettext/blob/master/arguments.js).
 
 ## Next Steps
 1. <strong>How do I get these React components/functions to actually translate strings?</strong>
