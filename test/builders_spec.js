@@ -8,7 +8,7 @@ const chai = require('chai');
 const sinon = require('sinon');
 const expect = chai.expect;
 
-describe('Builders', () => {
+describe('builders', () => {
   const state = {
     file: {
       opts: {
@@ -23,7 +23,7 @@ describe('Builders', () => {
     isStringLiteral: sinon.stub().returns(true),
   };
 
-  describe('buildCallExpressionEntry', () => {
+  describe('#buildCallExpressionEntry', () => {
     it('builds singular entry from call expression', () => {
       const path = {
         node: {
@@ -93,7 +93,7 @@ describe('Builders', () => {
     });
   });
 
-  describe('buildJSXElementEntry', () => {
+  describe('#buildJSXElementEntry', () => {
     it('builds complete entry from a JSX element', () => {
       const path = {
         node: {
@@ -131,7 +131,7 @@ describe('Builders', () => {
     });
   });
 
-  describe('mergeEntries', () => {
+  describe('#mergeEntries', () => {
     it('includes default charset and headers if included', () => {
       const charset = 'UTF-8';
       const expectedHeaders = {
@@ -260,7 +260,7 @@ describe('Builders', () => {
     });
   });
 
-  describe('buildReference', () => {
+  describe('#buildReference', () => {
     it('does not include reference if disabled', () => {
       const result = buildReference(
         { msgid: 'Hello' },

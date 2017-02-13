@@ -8,6 +8,6 @@
     "before": true,
     "afterEach": true,
     "after": true,
-    "sinon": true
+    "context": true
   }
 }

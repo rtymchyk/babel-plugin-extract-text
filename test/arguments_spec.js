@@ -40,14 +40,14 @@ const CUSTOM_ATTRIBUTES = {
   comment: 'msgcmt',
 };
 
-describe('Arguments', () => {
+describe('arguments', () => {
   [
     getSingularFunction,
     getPluralFunction,
     getPluralContextFunction,
     getSingularContextFunction,
   ].forEach(func => {
-    describe(`${func.name}`, () => {
+    describe(`#${func.name}`, () => {
       it('returns default function name if not defined', () => {
         expect(func({}).name).to.equal(DEFAULT_FUNCTIONS[func.name]);
       });
@@ -82,7 +82,7 @@ describe('Arguments', () => {
     getContextAttribute,
     getCommentAttribute,
   ].forEach(func => {
-    describe(`${func.name}`, () => {
+    describe(`#${func.name}`, () => {
       it('returns default attribute if not defined', () => {
         expect(func({})).to.equal(DEFAULT_ATTRIBUTES[func.name]);
       });
@@ -102,7 +102,7 @@ describe('Arguments', () => {
     });
   });
 
-  describe('getComponentName', () => {
+  describe('#getComponentName', () => {
     it('returns default component name if not defined', () => {
       expect(getComponentName({})).to.equal('LocalizedString');
     });

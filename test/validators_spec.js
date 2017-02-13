@@ -8,12 +8,12 @@ const sinon = require('sinon');
 const expect = chai.expect;
 const fail = chai.assert.fail;
 
-describe('Validators', () => {
+describe('validators', () => {
   const path = {
     buildCodeFrameError: sinon.spy(),
   };
 
-  describe('validateFuncArg', () => {
+  describe('#validateFuncArg', () => {
     it('returns arg value if arg is a String literal', () => {
       const value = validateFuncArg({ value: 'Hello' }, 0, '_', {
         isStringLiteral: sinon.stub().returns(true),
@@ -36,7 +36,7 @@ describe('Validators', () => {
     });
   });
 
-  describe('validateComponentEntry', () => {
+  describe('#validateComponentEntry', () => {
     const types = sinon.stub();
     const state = sinon.stub();
 
