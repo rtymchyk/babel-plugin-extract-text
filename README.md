@@ -105,5 +105,5 @@ msgstr ""
 
   Many extraction tools invent their own format, or use a basic JSON structure, which is either too simple (e.g. not able to support pluralization) and/or not translator friendly (translators are used to working with certain formats). Gettext/PO is a proven method for translation that satisfies all stakeholders (translators, developers, product, and user).
 
-## Other
+## Acknowledgements
 Thanks to the folks over at Sentry for their [blog post](https://blog.sentry.io/2016/01/07/react-i18n.html), and their [extractor](https://github.com/getsentry/babel-gettext-extractor) tool, both of which served as an inspiration for me to utilize Babel to extend the extraction process to React.
