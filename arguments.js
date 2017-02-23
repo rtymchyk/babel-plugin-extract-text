@@ -41,7 +41,7 @@ function getFunctionOptions(state) {
 }
 
 function getComponentOptions(state) {
-  return Object.assign({}, DEFAULTS, state.opts).component;
+  return Object.assign({}, DEFAULTS.component, (state.opts || {}).component);
 }
 
 module.exports = {
