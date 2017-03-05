@@ -2,8 +2,11 @@
 Babel plugin to extract strings from React components and gettext-like functions into a gettext PO file.
 
 ## Features
-- Extraction from gettext-like functions (e.g. `_('Hello World')`)
-- Extraction from React components (e.g. `<LocalizedString id="Hello World"/>`)
+- Extraction from gettext-like functions 
+  - `_('Hello World')`
+- Extraction from React components 
+  - Verbose style: `<LocalizedString id="Hello World" />`
+  - Shortform style: `<LocalizedString i18n={_('Hello World')} />`
 - Customizable extraction (e.g. component name, function names and function argument positions)
 - Supports translator comments and context (comments are only available for components)
 - Validation (e.g. props missing on component, non-string literals are used for call expression arguments)
@@ -47,6 +50,7 @@ babel.transformFile('someCode.js', {
         plural: 'idPlural',
         context: 'context',
         comment: 'comment',
+        shortform: 'i18n',
       },
     }],
   ],
@@ -55,12 +59,16 @@ babel.transformFile('someCode.js', {
 
 Input (`someCode.js`)
 ```javascript
+// Verbose style, specifying gettext args via props
 <Message
     id="You have a cat."
     idPlural="You have {cats} cats!"
     comment="User profile description for a public profile"
     count={numCats}
     cats={numCatsFormatted} />
+
+// Shortform style, using gettext function directly
+<Message i18n={_('Hello World')} />
 
 _c('Flag', 'Physical Object');
  ```
@@ -84,6 +92,10 @@ msgstr[1] ""
 #: someCode.js
 msgctxt "Physical Object"
 msgid "Flag"
+msgstr ""
+
+#: someCode.js
+msgid "Hello World"
 msgstr ""
 ```
 
