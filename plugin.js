@@ -10,7 +10,7 @@ const {
   buildCallExpressionEntry,
   buildJSXElementEntry,
   mergeEntries,
-} = require('./builders');
+} = require('./src/builders');
 
 module.exports = ({ types }) => {
   const entries = [];
@@ -27,9 +27,7 @@ module.exports = ({ types }) => {
       },
     },
     post(state) {
-      const thisPlugin = state.opts.plugins.filter(plugin => {
-        return plugin[0].key === PLUGIN_KEY;
-      })[0];
+      const thisPlugin = state.opts.plugins.filter(plugin => plugin[0].key === PLUGIN_KEY)[0];
       const args = thisPlugin[1] || {};
       const outputFile = args.outputFile || DEFAULT_OUTPUT_FILE;
       const poRawData = mergeEntries(args, entries);

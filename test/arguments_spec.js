@@ -10,7 +10,7 @@ const {
   getContextAttribute,
   getCommentAttribute,
   getComponentName,
-} = require('../arguments');
+} = require('../src/arguments');
 
 const DEFAULT_FUNCTIONS = {
   getSingularFunction: '_',
@@ -47,7 +47,7 @@ describe('arguments', () => {
       getPluralFunction,
       getPluralContextFunction,
       getSingularContextFunction,
-    ].forEach(func => {
+    ].forEach((func) => {
       describe(`#${func.name}`, () => {
         it('returns default function name if not defined', () => {
           expect(func({}).name).to.equal(DEFAULT_FUNCTIONS[func.name]);
@@ -82,7 +82,7 @@ describe('arguments', () => {
       getPluralAttribute,
       getContextAttribute,
       getCommentAttribute,
-    ].forEach(func => {
+    ].forEach((func) => {
       describe(`#${func.name}`, () => {
         it('returns default attribute if not defined', () => {
           expect(func({})).to.equal(DEFAULT_ATTRIBUTES[func.name]);
@@ -113,15 +113,15 @@ describe('arguments', () => {
   context('partial override', () => {
     describe('#getSingularAttribute', () => {
       it('returns default attribute if not specified in partial', () => {
-        expect(getSingularAttribute({ opts: { component: { name: 'Msg' }}}))
-          .to.equal(DEFAULT_ATTRIBUTES['getSingularAttribute']);
+        expect(getSingularAttribute({ opts: { component: { name: 'Msg' } } }))
+          .to.equal(DEFAULT_ATTRIBUTES.getSingularAttribute);
       });
     });
 
     describe('#getComponentName', () => {
       it('returns custom component name if defined', () => {
         expect(getComponentName({
-          opts: { component: { name: 'Msg' }},
+          opts: { component: { name: 'Msg' } },
         })).to.equal('Msg');
       });
     });

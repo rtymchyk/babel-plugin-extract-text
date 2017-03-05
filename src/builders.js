@@ -1,4 +1,5 @@
 /* eslint-disable camelcase */
+/* eslint-disable no-param-reassign */
 const {
   getSingularFunction,
   getSingularContextFunction,
@@ -20,7 +21,7 @@ const DEFAULT_CHARSET = 'UTF-8';
 const DEFAULT_HEADERS = {
   'content-type': 'text/plain; charset=UTF-8',
   'plural-forms': 'nplurals=2; plural=(n!=1);',
-  'language': 'en_US',
+  language: 'en_US',
 };
 
 function buildSingularEntry(args, types, path, state) {
@@ -125,16 +126,16 @@ module.exports = {
     let entry;
 
     switch (callee) {
-    case getSingularFunction(state).name:
-      entry = buildSingularEntry(args, types, path, state); break;
-    case getSingularContextFunction(state).name:
-      entry = buildSingularContextEntry(args, types, path, state); break;
-    case getPluralFunction(state).name:
-      entry = buildPluralEntry(args, types, path, state); break;
-    case getPluralContextFunction(state).name:
-      entry = buildPluralContextEntry(args, types, path, state); break;
-    default:
-      break;
+      case getSingularFunction(state).name:
+        entry = buildSingularEntry(args, types, path, state); break;
+      case getSingularContextFunction(state).name:
+        entry = buildSingularContextEntry(args, types, path, state); break;
+      case getPluralFunction(state).name:
+        entry = buildPluralEntry(args, types, path, state); break;
+      case getPluralContextFunction(state).name:
+        entry = buildPluralContextEntry(args, types, path, state); break;
+      default:
+        break;
     }
 
     return buildReference(entry, state);
@@ -146,31 +147,33 @@ module.exports = {
     if (element.name.name === getComponentName(state)) {
       const entry = {};
 
-      element.attributes.forEach(attribute => {
+      element.attributes.forEach((attribute) => {
         const attributeName = attribute.name.name;
         const attributeValue = attribute.value.value;
 
         switch (attributeName) {
-        case getSingularAttribute(state):
-          entry.msgid = attributeValue;
-          break;
-        case getPluralAttribute(state):
-          entry.msgid_plural = attributeValue;
-          break;
-        case getContextAttribute(state):
-          entry.msgctxt = attributeValue;
-          break;
-        case getCommentAttribute(state):
-          entry.extracted = attributeValue;
-          break;
-        default:
-          break;
+          case getSingularAttribute(state):
+            entry.msgid = attributeValue;
+            break;
+          case getPluralAttribute(state):
+            entry.msgid_plural = attributeValue;
+            break;
+          case getContextAttribute(state):
+            entry.msgctxt = attributeValue;
+            break;
+          case getCommentAttribute(state):
+            entry.extracted = attributeValue;
+            break;
+          default:
+            break;
         }
       });
 
       validateComponentEntry(entry, types, path, state);
       return buildReference(entry, state);
     }
+
+    return null;
   },
 
   mergeEntries(args, entries) {
@@ -180,7 +183,7 @@ module.exports = {
       translations: {},
     };
 
-    entries.forEach(entry => {
+    entries.forEach((entry) => {
       const { msgid, msgid_plural, msgctxt, extracted, reference } = entry;
       const context = entry.msgctxt || '';
 

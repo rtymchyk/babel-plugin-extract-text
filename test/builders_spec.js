@@ -1,11 +1,12 @@
+const chai = require('chai');
+const sinon = require('sinon');
 const {
   buildCallExpressionEntry,
   buildJSXElementEntry,
   buildReference,
   mergeEntries,
-} = require('../builders');
-const chai = require('chai');
-const sinon = require('sinon');
+} = require('../src/builders');
+
 const expect = chai.expect;
 
 describe('builders', () => {
@@ -137,7 +138,7 @@ describe('builders', () => {
       const expectedHeaders = {
         'content-type': 'text/plain; charset=UTF-8',
         'plural-forms': 'nplurals=2; plural=(n!=1);',
-        'language': 'en_US',
+        language: 'en_US',
       };
       const result = mergeEntries({}, []);
 
@@ -153,7 +154,7 @@ describe('builders', () => {
       const expectedHeaders = {
         'content-type': 'text/plain; charset=XYZ',
         'plural-forms': 'nplurals=2; plural=(n!=1);',
-        'language': 'en_US',
+        language: 'en_US',
       };
 
       const result = mergeEntries({ charset, headers }, []);
@@ -264,7 +265,7 @@ describe('builders', () => {
     it('does not include reference if disabled', () => {
       const result = buildReference(
         { msgid: 'Hello' },
-        Object.assign({}, state, { opts: { includeReference: false }}));
+        Object.assign({}, state, { opts: { includeReference: false } }));
 
       expect(result.reference).to.equal(undefined);
     });
@@ -272,7 +273,7 @@ describe('builders', () => {
     it('includes reference if enabled', () => {
       const result = buildReference(
         { msgid: 'Hello' },
-        Object.assign({}, state, { opts: { includeReference: true }}));
+        Object.assign({}, state, { opts: { includeReference: true } }));
 
       expect(result.reference)
         .to.equal('/Users/rtymchyk/projects/project/js/code.js');

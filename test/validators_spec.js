@@ -1,7 +1,7 @@
 const {
   validateFuncArg,
   validateComponentEntry,
-} = require('../validators');
+} = require('../src/validators');
 const chai = require('chai');
 const sinon = require('sinon');
 
@@ -41,7 +41,7 @@ describe('validators', () => {
     const state = sinon.stub();
 
     it('does not throw error if contains singular form', () => {
-      validateComponentEntry({ msgid: 'Hello'}, types, path, state);
+      validateComponentEntry({ msgid: 'Hello' }, types, path, state);
     });
 
     it('throws error if does not contain singular form', () => {

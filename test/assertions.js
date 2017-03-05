@@ -46,9 +46,8 @@ module.exports = {
   },
 
   assertNumberOfEntries(po, expectedNumber) {
-    const entries = Object.keys(po.translations).reduce((accumulator, currentValue) => {
-      return accumulator + Object.keys(po.translations[currentValue]).length;
-    }, 0) - 1;
+    const entries = Object.keys(po.translations).reduce((accumulator, currentValue) => (
+      accumulator + Object.keys(po.translations[currentValue]).length), 0) - 1;
 
     expect(entries).to.equal(expectedNumber);
   },

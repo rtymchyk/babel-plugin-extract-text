@@ -54,7 +54,7 @@ describe('plugin', () => {
       it('should extract 1 singular/plural string with context', () => {
         babel.transform(
           '<LocalizedString id="1 flag" idPlural="Many flags" context="Object"/>',
-          OPTIONS
+          OPTIONS,
         );
         const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
         assertHasPluralContextEntry(po, '1 flag', 'Many flags', 'Object');
@@ -119,7 +119,7 @@ describe('plugin', () => {
               },
             }],
           ],
-        }
+        },
       );
       const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
       assertHasPluralContextEntry(po, '1 Cat', 'Many Cats', 'SomeContext');
@@ -163,7 +163,7 @@ describe('plugin', () => {
               ],
             }],
           ],
-        }
+        },
       );
       const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
 
