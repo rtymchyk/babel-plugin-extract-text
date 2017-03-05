@@ -1,6 +1,6 @@
 {
   "name": "babel-extract-gettext",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Babel plugin to extract strings from React components and gettext-like functions into a gettext PO file.",
   "main": "plugin.js",
   "scripts": {
