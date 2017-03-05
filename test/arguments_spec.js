@@ -10,6 +10,7 @@ const {
   getContextAttribute,
   getCommentAttribute,
   getComponentName,
+  getShortFormAttribute,
 } = require('../src/arguments');
 
 const DEFAULT_FUNCTIONS = {
@@ -24,6 +25,7 @@ const DEFAULT_ATTRIBUTES = {
   getPluralAttribute: 'idPlural',
   getContextAttribute: 'context',
   getCommentAttribute: 'comment',
+  getShortFormAttribute: 'i18n',
 };
 
 const CUSTOM_FUNCTIONS = {
@@ -82,6 +84,7 @@ describe('arguments', () => {
       getPluralAttribute,
       getContextAttribute,
       getCommentAttribute,
+      getShortFormAttribute,
     ].forEach((func) => {
       describe(`#${func.name}`, () => {
         it('returns default attribute if not defined', () => {

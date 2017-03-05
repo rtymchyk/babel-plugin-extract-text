@@ -10,6 +10,7 @@ const {
   getPluralAttribute,
   getContextAttribute,
   getCommentAttribute,
+  getShortFormAttribute,
 } = require('./arguments');
 
 const {
@@ -163,6 +164,9 @@ module.exports = {
             break;
           case getCommentAttribute(state):
             entry.extracted = attributeValue;
+            break;
+          case getShortFormAttribute(state):
+            entry.shortform = attributeValue;
             break;
           default:
             break;

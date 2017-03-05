@@ -10,6 +10,7 @@ const DEFAULTS = {
     plural: 'idPlural',
     context: 'context',
     comment: 'comment',
+    shortform: 'i18n',
   },
   function: [
     {
@@ -64,4 +65,6 @@ module.exports = {
   getContextAttribute: state => getComponentOptions(state).context,
 
   getCommentAttribute: state => getComponentOptions(state).comment,
+
+  getShortFormAttribute: state => getComponentOptions(state).shortform,
 };

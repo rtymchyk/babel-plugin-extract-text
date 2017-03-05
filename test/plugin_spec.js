@@ -99,6 +99,13 @@ describe('plugin', () => {
         assertHasPluralContextEntry(po, '1 flag', 'Many flags', 'Object');
         assertNumberOfEntries(po, 1);
       });
+
+      it('should extract from shortform call expression', () => {
+        babel.transform("<Msg i18n={_('Hey {name}!')} name='Bob' />", OPTIONS);
+        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        assertHasSingularEntry(po, 'Hey {name}!');
+        assertNumberOfEntries(po, 1);
+      });
     });
   });
 

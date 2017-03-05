@@ -1,6 +1,7 @@
 const {
   getComponentName,
   getSingularAttribute,
+  getShortFormAttribute,
 } = require('./arguments');
 
 module.exports = {
@@ -14,9 +15,9 @@ module.exports = {
   },
 
   validateComponentEntry(entry, types, path, state) {
-    if (!entry.msgid) {
+    if (!entry.msgid && !entry.shortform) {
       throw path.buildCodeFrameError(
-        `${getComponentName(state)} component must have a prop ${getSingularAttribute(state)} for singular form!`);
+        `${getComponentName(state)} component must have a prop '${getSingularAttribute(state)}' or '${getShortFormAttribute(state)}'!`);
     }
   },
 };

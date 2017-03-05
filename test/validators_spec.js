@@ -13,6 +13,10 @@ describe('validators', () => {
     buildCodeFrameError: sinon.spy(),
   };
 
+  beforeEach(() => {
+    path.buildCodeFrameError.reset();
+  });
+
   describe('#validateFuncArg', () => {
     it('returns arg value if arg is a String literal', () => {
       const value = validateFuncArg({ value: 'Hello' }, 0, '_', {
@@ -44,13 +48,17 @@ describe('validators', () => {
       validateComponentEntry({ msgid: 'Hello' }, types, path, state);
     });
 
-    it('throws error if does not contain singular form', () => {
+    it('does not throw error if contains shortform', () => {
+      validateComponentEntry({ shortform: sinon.stub() }, types, path, state);
+    });
+
+    it('throws error if does not contain singular form nor shortform', () => {
       try {
         validateComponentEntry({ msgid_plural: 'Many' }, types, path, state);
         fail();
       } catch (error) {
         expect(path.buildCodeFrameError.calledWith(
-          'LocalizedString component must have a prop id for singular form!'))
+          'LocalizedString component must have a prop \'id\' or \'i18n\'!'))
           .to.equal(true);
       }
     });
