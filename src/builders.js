@@ -166,7 +166,7 @@ module.exports = {
             entry.extracted = attributeValue;
             break;
           case getShortFormAttribute(state):
-            entry.shortform = attributeValue;
+            entry.isShortForm = true;
             break;
           default:
             break;

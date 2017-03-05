@@ -49,7 +49,7 @@ describe('validators', () => {
     });
 
     it('does not throw error if contains shortform', () => {
-      validateComponentEntry({ shortform: sinon.stub() }, types, path, state);
+      validateComponentEntry({ isShortForm: true }, types, path, state);
     });
 
     it('throws error if does not contain singular form nor shortform', () => {
