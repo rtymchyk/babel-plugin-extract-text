@@ -9,10 +9,14 @@ Babel plugin to extract strings from React components and gettext-like functions
 - Validation (e.g. props missing on component, non-string literals are used for call expression arguments)
 
 ## Setup
-1. `npm install babel-extract-gettext babel-plugin-syntax-jsx`
-2. In babel configuration: `{ plugins: ['syntax-jsx', ['babel-extract-gettext', { ... options ... }]] }`
-
-  <em>`babel-plugin-syntax-jsx` plugin is required only if you want to extract strings from JSX/React</em>
+Begin with installing this plugin and the JSX plugin for Babel
+```
+npm install babel-extract-gettext babel-plugin-syntax-jsx
+```
+In a babel configuration, add both plugins and set the options
+```
+{ plugins: ['syntax-jsx', ['babel-extract-gettext', { ... options ... }]] }
+```
 
 #### Options
 This plugin allows a number of configurations to be passed:
@@ -95,15 +99,15 @@ msgstr ""
 ## Motivation
 1. <strong>Why not use ICU MessageFormat?</strong>
 
-  ICU patterns strings are powerful, but are very clunky. Gettext style strings should be enough to cover the typical use cases. More importantly, ICU strings are not always supported by translators and translation providers, whereas PO strings are a de facto standard.
+  ICU patterns strings, while pretty powerful, can become clunkly very fast. Gettext style strings should be enough to cover the typical use cases and are easy to use and understand. More importantly, ICU strings are not always supported by translators and translation providers, whereas the PO format is a de facto standard.
 
 2. <strong>Why not use xgettext to extract?</strong>
 
-  Among a number of reasons, xgettext will only support extraction from call expressions.
+  xgettext is a difficult dependency to install and manage since it's not native to the JS ecosystem. Also, xgettext will only support extraction from call expressions. Regardless, the tool definitely does not support JSX/ES6, so you'll be running your code through Babel anyway.
 
-3. <strong>Why not use a simple JSON format for strings or format X?</strong>
+3. <strong>Why not use a simple JSON format for strings (or some format X)?</strong>
 
-  Many extraction tools invent their own format, or use a basic JSON structure, which is either too simple (e.g. not able to support pluralization) and/or not translator friendly (translators are used to working with certain formats). Gettext/PO is a proven method for translation that satisfies all stakeholders (translators, developers, product, and user).
+  Many extraction tools invent their own format, or use a basic JSON structure, which either ends up being too simple (e.g. not able to support pluralization) and/or not translator friendly (translators are used to working with certain formats). Gettext/PO is a proven method for translation that satisfies everyone: translators, developers, product, and users.
 
 ## Acknowledgements
 Thanks to the folks over at Sentry for their [blog post](https://blog.sentry.io/2016/01/07/react-i18n.html), and their [extractor](https://github.com/getsentry/babel-gettext-extractor) tool, both of which served as an inspiration for me to utilize Babel to extend the extraction process to React.
