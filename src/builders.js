@@ -174,6 +174,8 @@ module.exports = {
       });
 
       validateComponentEntry(entry, types, path, state);
+      if (entry.isShortForm) return null;
+
       return buildReference(entry, state);
     }
 

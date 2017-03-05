@@ -130,6 +130,28 @@ describe('builders', () => {
         extracted: 'On homepage',
       });
     });
+
+    it('does not build anything if includes the shortform prop', () => {
+      const path = {
+        node: {
+          openingElement: {
+            name: { name: 'LocalizedString' },
+            attributes: [{
+              name: { name: 'id' },
+              value: { value: 'You have one friend!' },
+            }, {
+              name: { name: 'idPlural' },
+              value: { value: 'You have {numFriends} friends!' },
+            }, {
+              name: { name: 'i18n' },
+              value: { value: sinon.stub() },
+            }],
+          },
+        },
+      };
+
+      expect(buildJSXElementEntry(types, path, state)).to.equal(null);
+    });
   });
 
   describe('#mergeEntries', () => {
