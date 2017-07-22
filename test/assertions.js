@@ -1,21 +1,19 @@
-const expect = require('chai').expect;
-
 module.exports = {
   assertHasSingularEntry(po, singular) {
     const entry = po.translations[''][singular];
-    expect(entry).to.not.equal(undefined);
-    expect(entry).to.deep.equal({
+    expect(entry).not.toBeUndefined();
+    expect(entry).toEqual({
       msgid: singular,
       msgstr: [''],
     });
   },
 
   assertHasSingularContextEntry(po, singular, context) {
-    expect(po.translations[context]).to.not.equal(undefined);
+    expect(po.translations[context]).not.toBeUndefined();
 
     const entry = po.translations[context][singular];
-    expect(entry).to.not.equal(undefined);
-    expect(entry).to.deep.equal({
+    expect(entry).not.toBeUndefined();
+    expect(entry).toEqual({
       msgid: singular,
       msgctxt: context,
       msgstr: [''],
@@ -24,8 +22,8 @@ module.exports = {
 
   assertHasPluralEntry(po, singular, plural) {
     const entry = po.translations[''][singular];
-    expect(entry).to.not.equal(undefined);
-    expect(entry).to.deep.equal({
+    expect(entry).not.toBeUndefined();
+    expect(entry).toEqual({
       msgid: singular,
       msgid_plural: plural,
       msgstr: ['', ''],
@@ -33,11 +31,11 @@ module.exports = {
   },
 
   assertHasPluralContextEntry(po, singular, plural, context) {
-    expect(po.translations[context]).to.not.equal(undefined);
+    expect(po.translations[context]).not.toBeUndefined();
 
     const entry = po.translations[context][singular];
-    expect(entry).to.not.equal(undefined);
-    expect(entry).to.deep.equal({
+    expect(entry).not.toBeUndefined();
+    expect(entry).toEqual({
       msgid: singular,
       msgid_plural: plural,
       msgctxt: context,
@@ -49,6 +47,6 @@ module.exports = {
     const entries = Object.keys(po.translations).reduce((accumulator, currentValue) => (
       accumulator + Object.keys(po.translations[currentValue]).length), 0) - 1;
 
-    expect(entries).to.equal(expectedNumber);
+    expect(entries).toBe(expectedNumber);
   },
 };

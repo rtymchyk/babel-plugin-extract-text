@@ -1,13 +1,9 @@
-const chai = require('chai');
-const sinon = require('sinon');
-const {
+import {
   buildCallExpressionEntry,
   buildJSXElementEntry,
   buildReference,
   mergeEntries,
-} = require('../src/builders');
-
-const expect = chai.expect;
+} from '../src/builders';
 
 describe('builders', () => {
   const state = {
@@ -21,7 +17,7 @@ describe('builders', () => {
     },
   };
   const types = {
-    isStringLiteral: sinon.stub().returns(true),
+    isStringLiteral: jest.fn(() => true),
   };
 
   describe('#buildCallExpressionEntry', () => {
@@ -33,7 +29,7 @@ describe('builders', () => {
         },
       };
 
-      expect(buildCallExpressionEntry(types, path, state)).to.deep.equal({
+      expect(buildCallExpressionEntry(types, path, state)).toEqual({
         msgid: 'Hello',
       });
     });
@@ -50,7 +46,7 @@ describe('builders', () => {
         },
       };
 
-      expect(buildCallExpressionEntry(types, path, state)).to.deep.equal({
+      expect(buildCallExpressionEntry(types, path, state)).toEqual({
         msgid: 'One',
         msgid_plural: 'Many',
       });
@@ -67,7 +63,7 @@ describe('builders', () => {
         },
       };
 
-      expect(buildCallExpressionEntry(types, path, state)).to.deep.equal({
+      expect(buildCallExpressionEntry(types, path, state)).toEqual({
         msgid: 'Flag',
         msgctxt: 'Physical Object',
       });
@@ -86,7 +82,7 @@ describe('builders', () => {
         },
       };
 
-      expect(buildCallExpressionEntry(types, path, state)).to.deep.equal({
+      expect(buildCallExpressionEntry(types, path, state)).toEqual({
         msgid: 'One',
         msgid_plural: 'Many',
         msgctxt: 'Some context',
@@ -123,7 +119,7 @@ describe('builders', () => {
         },
       };
 
-      expect(buildJSXElementEntry(types, path, state)).to.deep.equal({
+      expect(buildJSXElementEntry(types, path, state)).toEqual({
         msgid: 'You have one friend!',
         msgid_plural: 'You have {numFriends} friends!',
         msgctxt: 'Context',
@@ -144,13 +140,13 @@ describe('builders', () => {
               value: { value: 'You have {numFriends} friends!' },
             }, {
               name: { name: 'i18n' },
-              value: { value: sinon.stub() },
+              value: { value: jest.fn() },
             }],
           },
         },
       };
 
-      expect(buildJSXElementEntry(types, path, state)).to.equal(null);
+      expect(buildJSXElementEntry(types, path, state)).toBeNull();
     });
   });
 
@@ -164,8 +160,8 @@ describe('builders', () => {
       };
       const result = mergeEntries({}, []);
 
-      expect(result.charset).to.equal(charset);
-      expect(result.headers).to.deep.equal(expectedHeaders);
+      expect(result.charset).toEqual(charset);
+      expect(result.headers).toEqual(expectedHeaders);
     });
 
     it('allows overriding/including headers and charset', () => {
@@ -180,8 +176,8 @@ describe('builders', () => {
       };
 
       const result = mergeEntries({ charset, headers }, []);
-      expect(result.charset).to.equal(charset);
-      expect(result.headers).to.deep.equal(expectedHeaders);
+      expect(result.charset).toEqual(charset);
+      expect(result.headers).toEqual(expectedHeaders);
     });
 
     it('appends new references if same entry key', () => {
@@ -191,7 +187,7 @@ describe('builders', () => {
         { msgid: 'Hello', msgid_plural: 'World', reference: 'somefile3.js' },
       ]);
 
-      expect(result.translations[''].Hello.comments.reference).to.equal(
+      expect(result.translations[''].Hello.comments.reference).toBe(
         'somefile.js\nsomefile2.js\nsomefile3.js');
     });
 
@@ -201,8 +197,7 @@ describe('builders', () => {
         { msgid: 'Hello', reference: 'somefile.js' },
       ]);
 
-      expect(result.translations[''].Hello.comments.reference).to.equal(
-        'somefile.js');
+      expect(result.translations[''].Hello.comments.reference).toBe('somefile.js');
     });
 
     it('inserts new context key if does not exist', () => {
@@ -211,13 +206,13 @@ describe('builders', () => {
         msgid: 'Flag',
       }]);
 
-      expect(result.translations.Physical).to.not.equal(undefined);
+      expect(result.translations.Physical).not.toBeUndefined();
     });
 
     it('singular entry contains 1 msgstr', () => {
       const result = mergeEntries({}, [{ msgid: 'World' }]);
 
-      expect(result.translations[''].World.msgstr).to.deep.equal(['']);
+      expect(result.translations[''].World.msgstr).toEqual(['']);
     });
 
     it('plural entry contains 2 msgstr', () => {
@@ -226,7 +221,7 @@ describe('builders', () => {
         msgid: 'One',
       }]);
 
-      expect(result.translations[''].One.msgstr).to.deep.equal(['', '']);
+      expect(result.translations[''].One.msgstr).toEqual(['', '']);
     });
 
     it('uses first extracted comment for merging duplicates', () => {
@@ -238,8 +233,7 @@ describe('builders', () => {
         extracted: 'On logout page!',
       }]);
 
-      expect(result.translations[''].Hello.comments.extracted).to.equal(
-        'On homepage!');
+      expect(result.translations[''].Hello.comments.extracted).toBe('On homepage!');
     });
 
     it('uses first plural form found for merging duplicates', () => {
@@ -251,7 +245,7 @@ describe('builders', () => {
         msgid_plural: 'So Many',
       }]);
 
-      expect(result.translations[''].One.msgid_plural).to.equal('Many');
+      expect(result.translations[''].One.msgid_plural).toBe('Many');
     });
 
     it('can inflate singular to plural entry if duplicated', () => {
@@ -263,9 +257,9 @@ describe('builders', () => {
       }]);
 
       const entry = result.translations[''].One;
-      expect(entry.msgid).to.equal('One');
-      expect(entry.msgid_plural).to.equal('Many');
-      expect(entry.msgstr).to.deep.equal(['', '']);
+      expect(entry.msgid).toBe('One');
+      expect(entry.msgid_plural).toBe('Many');
+      expect(entry.msgstr).toEqual(['', '']);
     });
 
     it('keeps plural entry if singular duplicates it', () => {
@@ -277,9 +271,9 @@ describe('builders', () => {
       }]);
 
       const entry = result.translations[''].One;
-      expect(entry.msgid).to.equal('One');
-      expect(entry.msgid_plural).to.equal('Many');
-      expect(entry.msgstr).to.deep.equal(['', '']);
+      expect(entry.msgid).toBe('One');
+      expect(entry.msgid_plural).toBe('Many');
+      expect(entry.msgstr).toEqual(['', '']);
     });
   });
 
@@ -289,7 +283,7 @@ describe('builders', () => {
         { msgid: 'Hello' },
         Object.assign({}, state, { opts: { includeReference: false } }));
 
-      expect(result.reference).to.equal(undefined);
+      expect(result.reference).toBeUndefined();
     });
 
     it('includes reference if enabled', () => {
@@ -297,8 +291,7 @@ describe('builders', () => {
         { msgid: 'Hello' },
         Object.assign({}, state, { opts: { includeReference: true } }));
 
-      expect(result.reference)
-        .to.equal('/Users/rtymchyk/projects/project/js/code.js');
+      expect(result.reference).toBe('/Users/rtymchyk/projects/project/js/code.js');
     });
 
     it('strips up to base directory from reference if found', () => {
@@ -311,7 +304,7 @@ describe('builders', () => {
           },
         }));
 
-      expect(result.reference).to.equal('js/code.js');
+      expect(result.reference).toBe('js/code.js');
     });
 
     it('uses file name as entry reference if base directory not found', () => {
@@ -325,8 +318,7 @@ describe('builders', () => {
           },
         }));
 
-      expect(result.reference).to.equal(
-        '/Users/rtymchyk/projects/project/js/code.js');
+      expect(result.reference).toBe('/Users/rtymchyk/projects/project/js/code.js');
     });
   });
 });

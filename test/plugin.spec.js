@@ -1,16 +1,14 @@
-const expect = require('chai').expect;
-const babel = require('babel-core');
-const fs = require('fs');
-const gettextParser = require('gettext-parser');
-const decache = require('decache');
+import { transform } from 'babel-core';
+import fs from 'fs';
+import { po as poParser } from 'gettext-parser';
 
-const {
+import {
   assertHasSingularEntry,
   assertHasSingularContextEntry,
   assertHasPluralEntry,
   assertHasPluralContextEntry,
   assertNumberOfEntries,
-} = require('./assertions');
+} from './assertions';
 
 const TESTPO = 'test.po';
 const OPTIONS = {
@@ -22,87 +20,86 @@ const OPTIONS = {
 
 describe('plugin', () => {
   afterEach(() => {
-    decache('../plugin.js');
+    jest.resetModules();
     if (fs.existsSync(TESTPO)) {
       fs.unlinkSync(TESTPO);
     }
   });
 
   describe('Visitors', () => {
-    context('JSXElement', () => {
+    describe('JSXElement', () => {
       it('should extract 1 singular string', () => {
-        babel.transform('<LocalizedString id="Hello World!"/>', OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        transform('<LocalizedString id="Hello World!"/>', OPTIONS);
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasSingularEntry(po, 'Hello World!');
         assertNumberOfEntries(po, 1);
       });
 
       it('should extract 1 singular/plural string ', () => {
-        babel.transform('<LocalizedString id="One" idPlural="Many"/>', OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        transform('<LocalizedString id="One" idPlural="Many"/>', OPTIONS);
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasPluralEntry(po, 'One', 'Many');
         assertNumberOfEntries(po, 1);
       });
 
       it('should extract 1 singular string with context', () => {
-        babel.transform('<LocalizedString id="Flag" context="Object"/>', OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        transform('<LocalizedString id="Flag" context="Object"/>', OPTIONS);
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasSingularContextEntry(po, 'Flag', 'Object');
         assertNumberOfEntries(po, 1);
       });
 
       it('should extract 1 singular/plural string with context', () => {
-        babel.transform(
+        transform(
           '<LocalizedString id="1 flag" idPlural="Many flags" context="Object"/>',
           OPTIONS,
         );
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasPluralContextEntry(po, '1 flag', 'Many flags', 'Object');
         assertNumberOfEntries(po, 1);
       });
 
       it('should extract comments', () => {
-        babel.transform(
+        transform(
           '<LocalizedString id="Hey there!" comment="On Homepage"/>', OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
-        expect(po.translations['']['Hey there!'].comments.extracted).to.equal(
-          'On Homepage');
+        const po = poParser.parse(fs.readFileSync(TESTPO));
+        expect(po.translations['']['Hey there!'].comments.extracted).toBe('On Homepage');
         assertNumberOfEntries(po, 1);
       });
     });
 
-    context('CallExpression', () => {
+    describe('CallExpression', () => {
       it('should extract 1 singular string', () => {
-        babel.transform("_('Hello World!')", OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        transform("_('Hello World!')", OPTIONS);
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasSingularEntry(po, 'Hello World!');
         assertNumberOfEntries(po, 1);
       });
 
       it('should extract 1 singular/plural string ', () => {
-        babel.transform("_n('One', 'Many', 5)", OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        transform("_n('One', 'Many', 5)", OPTIONS);
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasPluralEntry(po, 'One', 'Many');
         assertNumberOfEntries(po, 1);
       });
 
       it('should extract 1 singular string with context', () => {
-        babel.transform("_c('Flag', 'Object')", OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        transform("_c('Flag', 'Object')", OPTIONS);
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasSingularContextEntry(po, 'Flag', 'Object');
         assertNumberOfEntries(po, 1);
       });
 
       it('should extract 1 singular/plural string with context', () => {
-        babel.transform("_nc('1 flag', 'Many flags', 5, 'Object')", OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        transform("_nc('1 flag', 'Many flags', 5, 'Object')", OPTIONS);
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasPluralContextEntry(po, '1 flag', 'Many flags', 'Object');
         assertNumberOfEntries(po, 1);
       });
 
       it('should extract from shortform call expression', () => {
-        babel.transform("<Msg i18n={_('Hey {name}!')} name='Bob' />", OPTIONS);
-        const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+        transform("<Msg i18n={_('Hey {name}!')} name='Bob' />", OPTIONS);
+        const po = poParser.parse(fs.readFileSync(TESTPO));
         assertHasSingularEntry(po, 'Hey {name}!');
         assertNumberOfEntries(po, 1);
       });
@@ -111,7 +108,7 @@ describe('plugin', () => {
 
   describe('Configuration', () => {
     it('JSXElement', () => {
-      babel.transform(
+      transform(
         '<Msg msgid="1 Cat" msgid_plural="Many Cats" msgctxt="SomeContext"/>',
         {
           plugins: [
@@ -128,13 +125,13 @@ describe('plugin', () => {
           ],
         },
       );
-      const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+      const po = poParser.parse(fs.readFileSync(TESTPO));
       assertHasPluralContextEntry(po, '1 Cat', 'Many Cats', 'SomeContext');
       assertNumberOfEntries(po, 1);
     });
 
     it('CallExpression', () => {
-      babel.transform(
+      transform(
         `
           msg(locale, 'Hello');
           msgp(locale, '1 person', '{x} people', 5);
@@ -172,7 +169,7 @@ describe('plugin', () => {
           ],
         },
       );
-      const po = gettextParser.po.parse(fs.readFileSync(TESTPO));
+      const po = poParser.parse(fs.readFileSync(TESTPO));
 
       assertHasSingularEntry(po, 'Hello');
       assertHasSingularContextEntry(po, 'Block', 'Lego');

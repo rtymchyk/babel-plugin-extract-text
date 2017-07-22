@@ -1,13 +1,6 @@
 {
-  "extends": "airbnb",
-  "globals": {
-    "describe": true,
-    "it": true,
-    "expect": true,
-    "beforeEach": true,
-    "before": true,
-    "afterEach": true,
-    "after": true,
-    "context": true
+  "extends": "standard",
+  "env": {
+    "jest": true
   }
 }

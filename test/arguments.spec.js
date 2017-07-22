@@ -1,6 +1,4 @@
-const expect = require('chai').expect;
-
-const {
+import {
   getSingularFunction,
   getSingularContextFunction,
   getPluralFunction,
@@ -11,7 +9,7 @@ const {
   getCommentAttribute,
   getComponentName,
   getShortFormAttribute,
-} = require('../src/arguments');
+} from '../src/arguments';
 
 const DEFAULT_FUNCTIONS = {
   getSingularFunction: '_',
@@ -43,7 +41,7 @@ const CUSTOM_ATTRIBUTES = {
 };
 
 describe('arguments', () => {
-  context('complete/empty overrides', () => {
+  describe('complete/empty overrides', () => {
     [
       getSingularFunction,
       getPluralFunction,
@@ -52,7 +50,7 @@ describe('arguments', () => {
     ].forEach((func) => {
       describe(`#${func.name}`, () => {
         it('returns default function name if not defined', () => {
-          expect(func({}).name).to.equal(DEFAULT_FUNCTIONS[func.name]);
+          expect(func({}).name).toBe(DEFAULT_FUNCTIONS[func.name]);
         });
 
         it('returns custom function name if defined', () => {
@@ -74,7 +72,7 @@ describe('arguments', () => {
                 },
               ],
             },
-          }).name).to.equal(CUSTOM_FUNCTIONS[func.name]);
+          }).name).toBe(CUSTOM_FUNCTIONS[func.name]);
         });
       });
     });
@@ -88,7 +86,7 @@ describe('arguments', () => {
     ].forEach((func) => {
       describe(`#${func.name}`, () => {
         it('returns default attribute if not defined', () => {
-          expect(func({})).to.equal(DEFAULT_ATTRIBUTES[func.name]);
+          expect(func({})).toBe(DEFAULT_ATTRIBUTES[func.name]);
         });
 
         it('returns custom attribute name if defined', () => {
@@ -101,23 +99,23 @@ describe('arguments', () => {
                 comment: 'msgcmt',
               },
             },
-          }).name).to.equal(CUSTOM_ATTRIBUTES[func.name]);
+          }).name).toBe(CUSTOM_ATTRIBUTES[func.name]);
         });
       });
     });
 
     describe('#getComponentName', () => {
       it('returns default component name if not defined', () => {
-        expect(getComponentName({})).to.equal('LocalizedString');
+        expect(getComponentName({})).toBe('LocalizedString');
       });
     });
   });
 
-  context('partial override', () => {
+  describe('partial override', () => {
     describe('#getSingularAttribute', () => {
       it('returns default attribute if not specified in partial', () => {
         expect(getSingularAttribute({ opts: { component: { name: 'Msg' } } }))
-          .to.equal(DEFAULT_ATTRIBUTES.getSingularAttribute);
+          .toBe(DEFAULT_ATTRIBUTES.getSingularAttribute);
       });
     });
 
@@ -125,7 +123,7 @@ describe('arguments', () => {
       it('returns custom component name if defined', () => {
         expect(getComponentName({
           opts: { component: { name: 'Msg' } },
-        })).to.equal('Msg');
+        })).toBe('Msg');
       });
     });
   });
