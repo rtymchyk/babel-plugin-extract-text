@@ -104,7 +104,7 @@ msgstr ""
 ## Next Steps
 1. <strong>How do I get these React components/functions to actually translate strings?</strong>
 
-  You'll need to build these out and hook them up to a basic gettext client. Check out [Jed](https://github.com/messageformat/Jed).
+  You can use my other library [react-translations](https://www.npmjs.com/package/react-translations). Otherwise you'll need to build these out and hook them up to a basic gettext client. 
 
 2. <strong>How do I use a translated PO given back to me by translators?</strong>
 
