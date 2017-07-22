@@ -1,7 +1,7 @@
-const SINGULAR = 'SINGULAR';
-const PLURAL = 'PLURAL';
-const SINGULAR_CONTEXT = 'SINGULAR_CONTEXT';
-const PLURAL_CONTEXT = 'PLURAL_CONTEXT';
+const SINGULAR = 'SINGULAR'
+const PLURAL = 'PLURAL'
+const SINGULAR_CONTEXT = 'SINGULAR_CONTEXT'
+const PLURAL_CONTEXT = 'PLURAL_CONTEXT'
 
 const DEFAULTS = {
   component: {
@@ -35,14 +35,14 @@ const DEFAULTS = {
       context: 3,
     },
   ],
-};
-
-function getFunctionOptions(state) {
-  return Object.assign({}, DEFAULTS, state.opts).function;
 }
 
-function getComponentOptions(state) {
-  return Object.assign({}, DEFAULTS.component, (state.opts || {}).component);
+function getFunctionOptions (state) {
+  return Object.assign({}, DEFAULTS, state.opts).function
+}
+
+function getComponentOptions (state) {
+  return Object.assign({}, DEFAULTS.component, (state.opts || {}).component)
 }
 
 module.exports = {
@@ -67,4 +67,4 @@ module.exports = {
   getCommentAttribute: state => getComponentOptions(state).comment,
 
   getShortFormAttribute: state => getComponentOptions(state).shortform,
-};
+}

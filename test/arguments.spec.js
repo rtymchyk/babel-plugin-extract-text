@@ -9,14 +9,14 @@ import {
   getCommentAttribute,
   getComponentName,
   getShortFormAttribute,
-} from '../src/arguments';
+} from '../src/arguments'
 
 const DEFAULT_FUNCTIONS = {
   getSingularFunction: '_',
   getPluralFunction: '_n',
   getSingularContextFunction: '_c',
   getPluralContextFunction: '_nc',
-};
+}
 
 const DEFAULT_ATTRIBUTES = {
   getSingularAttribute: 'id',
@@ -24,21 +24,21 @@ const DEFAULT_ATTRIBUTES = {
   getContextAttribute: 'context',
   getCommentAttribute: 'comment',
   getShortFormAttribute: 'i18n',
-};
+}
 
 const CUSTOM_FUNCTIONS = {
   getSingularFunction: 'msg',
   getPluralFunction: 'msgp',
   getSingularContextFunction: 'msgc',
   getPluralContextFunction: 'msgpc',
-};
+}
 
 const CUSTOM_ATTRIBUTES = {
   singular: 'msgid',
   plural: 'msgid_plural',
   context: 'msgctxt',
   comment: 'msgcmt',
-};
+}
 
 describe('arguments', () => {
   describe('complete/empty overrides', () => {
@@ -50,8 +50,8 @@ describe('arguments', () => {
     ].forEach((func) => {
       describe(`#${func.name}`, () => {
         it('returns default function name if not defined', () => {
-          expect(func({}).name).toBe(DEFAULT_FUNCTIONS[func.name]);
-        });
+          expect(func({}).name).toBe(DEFAULT_FUNCTIONS[func.name])
+        })
 
         it('returns custom function name if defined', () => {
           expect(func({
@@ -72,9 +72,9 @@ describe('arguments', () => {
                 },
               ],
             },
-          }).name).toBe(CUSTOM_FUNCTIONS[func.name]);
-        });
-      });
+          }).name).toBe(CUSTOM_FUNCTIONS[func.name])
+        })
+      })
     });
 
     [
@@ -86,8 +86,8 @@ describe('arguments', () => {
     ].forEach((func) => {
       describe(`#${func.name}`, () => {
         it('returns default attribute if not defined', () => {
-          expect(func({})).toBe(DEFAULT_ATTRIBUTES[func.name]);
-        });
+          expect(func({})).toBe(DEFAULT_ATTRIBUTES[func.name])
+        })
 
         it('returns custom attribute name if defined', () => {
           expect(func({
@@ -99,32 +99,32 @@ describe('arguments', () => {
                 comment: 'msgcmt',
               },
             },
-          }).name).toBe(CUSTOM_ATTRIBUTES[func.name]);
-        });
-      });
-    });
+          }).name).toBe(CUSTOM_ATTRIBUTES[func.name])
+        })
+      })
+    })
 
     describe('#getComponentName', () => {
       it('returns default component name if not defined', () => {
-        expect(getComponentName({})).toBe('LocalizedString');
-      });
-    });
-  });
+        expect(getComponentName({})).toBe('LocalizedString')
+      })
+    })
+  })
 
   describe('partial override', () => {
     describe('#getSingularAttribute', () => {
       it('returns default attribute if not specified in partial', () => {
         expect(getSingularAttribute({ opts: { component: { name: 'Msg' } } }))
-          .toBe(DEFAULT_ATTRIBUTES.getSingularAttribute);
-      });
-    });
+          .toBe(DEFAULT_ATTRIBUTES.getSingularAttribute)
+      })
+    })
 
     describe('#getComponentName', () => {
       it('returns custom component name if defined', () => {
         expect(getComponentName({
           opts: { component: { name: 'Msg' } },
-        })).toBe('Msg');
-      });
-    });
-  });
-});
+        })).toBe('Msg')
+      })
+    })
+  })
+})
