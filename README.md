@@ -106,10 +106,6 @@ msgstr ""
 
   You can use my other library [react-translations](https://www.npmjs.com/package/react-translations). Otherwise you'll need to build these out and hook them up to a basic gettext client. 
 
-2. <strong>How do I use a translated PO given back to me by translators?</strong>
-
-  Check out [po2json](https://github.com/mikeedwards/po2json) to convert it to JSON, and serve the JSON as message bundles to clients to load into Jed.
-
 ## Motivation
 1. <strong>Why not use ICU MessageFormat?</strong>
 
