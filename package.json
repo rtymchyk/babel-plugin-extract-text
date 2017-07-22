@@ -4,9 +4,10 @@
   "description": "Babel plugin to extract strings from React components and gettext-like functions into a gettext PO file",
   "main": "plugin.js",
   "scripts": {
-    "lint": "eslint .",
     "test": "NODE_ENV=test jest",
-    "test-watch": "NODE_ENV=test jest --watch"
+    "test-watch": "NODE_ENV=test jest --watch",
+    "test-ci": "NODE_ENV=test jest --coverage && codecov",
+    "lint": "eslint ."
   },
   "author": "rtymchyk",
   "repository": {
@@ -34,6 +35,7 @@
     "babel-eslint": "^7.2.3",
     "babel-plugin-syntax-jsx": "^6.18.0",
     "babel-preset-env": "^1.6.0",
+    "codecov": "^2.2.0",
     "eslint": "^4.3.0",
     "eslint-config-standard": "^10.2.1",
     "eslint-plugin-import": "^2.7.0",
