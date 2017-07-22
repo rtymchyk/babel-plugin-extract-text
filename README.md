@@ -102,9 +102,7 @@ msgstr ""
 ```
 
 ## Next Steps
-1. <strong>How do I get these React components/functions to actually translate strings?</strong>
-
-  You can use my other library [react-translations](https://www.npmjs.com/package/react-translations). Otherwise you'll need to build these out and hook them up to a basic gettext client. 
+You can use my other library [react-translations](https://www.npmjs.com/package/react-translations), which plays nicely with this babel plugin. Otherwise you'll need to build out these components and hook them up to a basic gettext client such as [Jed](https://www.npmjs.com/package/jed).
 
 ## Motivation
 1. <strong>Why not use ICU MessageFormat?</strong>
