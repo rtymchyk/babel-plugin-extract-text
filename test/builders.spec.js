@@ -3,7 +3,7 @@ import {
   buildJSXElementEntry,
   buildReference,
   mergeEntries,
-} from '../src/builders'
+} from 'builders'
 
 describe('builders', () => {
   const state = {

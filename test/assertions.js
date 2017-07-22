@@ -1,7 +1,6 @@
 module.exports = {
   assertHasSingularEntry (po, singular) {
     const entry = po.translations[''][singular]
-    expect(entry).not.toBeUndefined()
     expect(entry).toEqual({
       msgid: singular,
       msgstr: [''],
@@ -12,7 +11,6 @@ module.exports = {
     expect(po.translations[context]).not.toBeUndefined()
 
     const entry = po.translations[context][singular]
-    expect(entry).not.toBeUndefined()
     expect(entry).toEqual({
       msgid: singular,
       msgctxt: context,
@@ -22,7 +20,6 @@ module.exports = {
 
   assertHasPluralEntry (po, singular, plural) {
     const entry = po.translations[''][singular]
-    expect(entry).not.toBeUndefined()
     expect(entry).toEqual({
       msgid: singular,
       msgid_plural: plural,
@@ -34,7 +31,6 @@ module.exports = {
     expect(po.translations[context]).not.toBeUndefined()
 
     const entry = po.translations[context][singular]
-    expect(entry).not.toBeUndefined()
     expect(entry).toEqual({
       msgid: singular,
       msgid_plural: plural,

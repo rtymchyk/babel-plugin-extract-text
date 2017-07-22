@@ -1,7 +1,7 @@
 import {
   validateFuncArg,
   validateComponentEntry,
-} from '../src/validators'
+} from 'validators'
 
 describe('validators', () => {
   const path = {
@@ -21,7 +21,7 @@ describe('validators', () => {
       expect(value).toBe('Hello')
     })
 
-    it('throws error if arg is not a String literal', () => {
+    it('throws error if arg is not a String literal', (done) => {
       try {
         validateFuncArg({ value: 1, type: 'Identifier' }, 0, '_', {
           isStringLiteral: jest.fn(() => false),
@@ -29,6 +29,7 @@ describe('validators', () => {
       } catch (error) {
         expect(path.buildCodeFrameError).toHaveBeenCalledWith(
           'Function _ must have a String literal for argument #1, found Identifier instead!')
+        done()
       }
     })
   })
@@ -45,12 +46,13 @@ describe('validators', () => {
       validateComponentEntry({ isShortForm: true }, types, path, state)
     })
 
-    it('throws error if does not contain singular form nor shortform', () => {
+    it('throws error if does not contain singular form nor shortform', (done) => {
       try {
         validateComponentEntry({ msgid_plural: 'Many' }, types, path, state)
       } catch (error) {
         expect(path.buildCodeFrameError).toHaveBeenCalledWith(
           'LocalizedString component must have a prop \'id\' or \'i18n\'!')
+        done()
       }
     })
   })

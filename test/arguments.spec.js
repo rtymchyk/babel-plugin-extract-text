@@ -9,7 +9,7 @@ import {
   getCommentAttribute,
   getComponentName,
   getShortFormAttribute,
-} from '../src/arguments'
+} from 'arguments'
 
 const DEFAULT_FUNCTIONS = {
   getSingularFunction: '_',

@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable no-param-reassign */
 const {
   getSingularFunction,
   getSingularContextFunction,
