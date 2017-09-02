@@ -1,7 +1,7 @@
-# babel-extract-gettext 
+# babel-plugin-extract-text
 Babel plugin to extract strings from React components and gettext-like functions into a gettext PO file.
 
-[![npm version](https://badge.fury.io/js/babel-extract-gettext.svg)](https://badge.fury.io/js/babel-extract-gettext) [![CircleCI](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg)](https://circleci.com/gh/rtymchyk/babel-extract-gettext) [![codecov](https://codecov.io/gh/rtymchyk/babel-extract-gettext/branch/master/graph/badge.svg)](https://codecov.io/gh/rtymchyk/babel-extract-gettext) [![David](https://david-dm.org/rtymchyk/babel-extract-gettext.svg)](https://david-dm.org/rtymchyk/babel-extract-gettext)
+[![npm version](https://badge.fury.io/js/babel-plugin-extract-text.svg)](https://badge.fury.io/js/babel-plugin-extract-text) [![CircleCI](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg)](https://circleci.com/gh/rtymchyk/babel-plugin-extract-text) [![codecov](https://codecov.io/gh/rtymchyk/babel-plugin-extract-text/branch/master/graph/badge.svg)](https://codecov.io/gh/rtymchyk/babel-plugin-extract-text) [![David](https://david-dm.org/rtymchyk/babel-plugin-extract-text.svg)](https://david-dm.org/rtymchyk/babel-plugin-extract-text)
 
 ## Features
 - Extraction from gettext-like functions 
@@ -16,11 +16,11 @@ Babel plugin to extract strings from React components and gettext-like functions
 ## Setup
 Begin with installing this plugin and the JSX plugin for Babel
 ```
-npm install babel-extract-gettext babel-plugin-syntax-jsx
+npm install babel-plugin-extract-text babel-plugin-syntax-jsx
 ```
 In a babel configuration, add both plugins and set the options
 ```
-{ plugins: ['syntax-jsx', ['babel-extract-gettext', { ... options ... }]] }
+{ plugins: ['syntax-jsx', ['babel-plugin-extract-text', { ... options ... }]] }
 ```
 
 #### Options
@@ -29,8 +29,8 @@ This plugin allows a number of configurations to be passed:
 - `includeReference`: Whether to include a file reference for PO entries (default `false`)
 - `baseDir`: Root directory of project. Everything up to and including this will be stripped from entry references.
 - `charset`: Character set for the PO (default `UTF-8`)
-- `headers`: Object indicating all PO headers to include. See the default headers [here](https://github.com/rtymchyk/babel-extract-gettext/blob/master/builders.js#L20).
-- `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See the default configuration [here](https://github.com/rtymchyk/babel-extract-gettext/blob/master/arguments.js).
+- `headers`: Object indicating all PO headers to include. See the default headers [here](https://github.com/rtymchyk/babel-plugin-extract-text/blob/master/builders.js#L20).
+- `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See the default configuration [here](https://github.com/rtymchyk/babel-plugin-extract-text/blob/master/arguments.js).
 
 ## Example
 Plugin Configuration
@@ -40,7 +40,7 @@ const babel = require('babel-core');
 babel.transformFile('someCode.js', {
   plugins: [
     'syntax-jsx',
-    ['babel-extract-gettext', {
+    ['babel-plugin-extract-text', {
       outputFile: 'en-US.po',
       includeReference: true,
       headers: {
