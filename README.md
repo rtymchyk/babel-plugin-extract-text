@@ -20,7 +20,7 @@ npm install babel-plugin-extract-text babel-plugin-syntax-jsx
 ```
 In a babel configuration, add both plugins and set the options
 ```
-{ plugins: ['syntax-jsx', ['babel-plugin-extract-text', { ... options ... }]] }
+{ plugins: ['syntax-jsx', ['extract-text', { ... options ... }]] }
 ```
 
 #### Options
