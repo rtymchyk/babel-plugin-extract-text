@@ -4,13 +4,13 @@ Babel plugin to extract strings from React components and gettext-like functions
 [![npm version](https://badge.fury.io/js/babel-plugin-extract-text.svg)](https://badge.fury.io/js/babel-plugin-extract-text) [![CircleCI](https://img.shields.io/circleci/project/github/RedSparr0w/node-csgo-parser.svg)](https://circleci.com/gh/rtymchyk/babel-plugin-extract-text) [![codecov](https://codecov.io/gh/rtymchyk/babel-plugin-extract-text/branch/master/graph/badge.svg)](https://codecov.io/gh/rtymchyk/babel-plugin-extract-text) [![David](https://david-dm.org/rtymchyk/babel-plugin-extract-text.svg)](https://david-dm.org/rtymchyk/babel-plugin-extract-text)
 
 ## Features
+- Extraction from React components 
+  - Verbose style: `<LocalizedString id="Nice cat!" idPlural="Nice cats!" count={numCats} />`
+  - Shortform style: `<LocalizedString i18n={_n('Nice cat!', 'Nice cats!', numCats)} />`
 - Extraction from gettext-like functions 
   - `_('Hello World')`
-- Extraction from React components 
-  - Verbose style: `<LocalizedString id="Hello World" />`
-  - Shortform style: `<LocalizedString i18n={_('Hello World')} />`
 - Customizable extraction (e.g. component name, function names and function argument positions)
-- Supports translator comments and context (comments are only available for components)
+- Supports translator comments and context
 - Validation (e.g. props missing on component, non-string literals are used for call expression arguments)
 
 ## Setup
