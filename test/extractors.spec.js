@@ -3,12 +3,16 @@ import {
 } from 'extractors'
 
 describe('validators', () => {
+  const isStringLiteral = jest.fn((arg) => !arg.left && !arg.right)
+  const isBinaryExpression = jest.fn((arg) => arg.left && arg.right)
   const path = {
     buildCodeFrameError: jest.fn(),
   }
 
   beforeEach(() => {
     path.buildCodeFrameError.mockReset()
+    isStringLiteral.mockClear()
+    isBinaryExpression.mockClear()
   })
 
   describe('#extractFuncArg', () => {
@@ -36,12 +40,8 @@ describe('validators', () => {
           },
         },
       }, 0, '_', {
-        isStringLiteral: jest.fn((arg) => {
-          if (!arg.left && !arg.right) return true
-        }),
-        isBinaryExpression: jest.fn((arg) => {
-          if (arg.left && arg.right) return true
-        }),
+        isStringLiteral,
+        isBinaryExpression,
       }, path)
 
       expect(value).toBe('Hello, Bob. You are great.')
@@ -56,6 +56,27 @@ describe('validators', () => {
       } catch (error) {
         expect(path.buildCodeFrameError).toHaveBeenCalledWith(
           'Function _ must have a String Literal or Binary Expression for argument #1, found Identifier instead!')
+        done()
+      }
+    })
+
+    it('throws error if Binary Expression is not using the + operator', (done) => {
+      try {
+        extractFuncArg({
+          operator: '-',
+          left: {
+            value: 'Hello, ',
+          },
+          right: {
+            value: 'Bob.',
+          },
+        }, 0, '_', {
+          isStringLiteral,
+          isBinaryExpression,
+        }, path)
+      } catch (error) {
+        expect(path.buildCodeFrameError).toHaveBeenCalledWith(
+          "Function _ must use the '+' operator for string concatenation for argument #1, found - instead!")
         done()
       }
     })
