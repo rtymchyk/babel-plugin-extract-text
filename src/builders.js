@@ -13,9 +13,12 @@ const {
 } = require('./arguments')
 
 const {
-  validateFuncArg,
   validateComponentEntry,
 } = require('./validators')
+
+const {
+  extractFuncArg,
+} = require('./extractors')
 
 const DEFAULT_CHARSET = 'UTF-8'
 const DEFAULT_HEADERS = {
@@ -29,7 +32,7 @@ function buildSingularEntry (args, types, path, state) {
   const msgid = args[func.singular]
 
   return {
-    msgid: validateFuncArg(msgid, func.singular, func.name, types, path),
+    msgid: extractFuncArg(msgid, func.singular, func.name, types, path),
   }
 }
 
@@ -39,8 +42,8 @@ function buildSingularContextEntry (args, types, path, state) {
   const msgctxt = args[func.context]
 
   return {
-    msgid: validateFuncArg(msgid, func.singular, func.name, types, path),
-    msgctxt: validateFuncArg(msgctxt, func.context, func.name, types, path),
+    msgid: extractFuncArg(msgid, func.singular, func.name, types, path),
+    msgctxt: extractFuncArg(msgctxt, func.context, func.name, types, path),
   }
 }
 
@@ -50,8 +53,8 @@ function buildPluralEntry (args, types, path, state) {
   const msgid_plural = args[func.plural]
 
   return {
-    msgid: validateFuncArg(msgid, func.singular, func.name, types, path),
-    msgid_plural: validateFuncArg(msgid_plural, func.plural, func.name, types, path),
+    msgid: extractFuncArg(msgid, func.singular, func.name, types, path),
+    msgid_plural: extractFuncArg(msgid_plural, func.plural, func.name, types, path),
   }
 }
 
@@ -62,9 +65,9 @@ function buildPluralContextEntry (args, types, path, state) {
   const msgctxt = args[func.context]
 
   return {
-    msgid: validateFuncArg(msgid, func.singular, func.name, types, path),
-    msgid_plural: validateFuncArg(msgid_plural, func.plural, func.name, types, path),
-    msgctxt: validateFuncArg(msgctxt, func.context, func.name, types, path),
+    msgid: extractFuncArg(msgid, func.singular, func.name, types, path),
+    msgid_plural: extractFuncArg(msgid_plural, func.plural, func.name, types, path),
+    msgctxt: extractFuncArg(msgctxt, func.context, func.name, types, path),
   }
 }
 

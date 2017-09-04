@@ -1,5 +1,4 @@
 import {
-  validateFuncArg,
   validateComponentEntry,
 } from 'validators'
 
@@ -10,28 +9,6 @@ describe('validators', () => {
 
   beforeEach(() => {
     path.buildCodeFrameError.mockReset()
-  })
-
-  describe('#validateFuncArg', () => {
-    it('returns arg value if arg is a String literal', () => {
-      const value = validateFuncArg({ value: 'Hello' }, 0, '_', {
-        isStringLiteral: jest.fn(() => true),
-      }, path)
-
-      expect(value).toBe('Hello')
-    })
-
-    it('throws error if arg is not a String literal', (done) => {
-      try {
-        validateFuncArg({ value: 1, type: 'Identifier' }, 0, '_', {
-          isStringLiteral: jest.fn(() => false),
-        }, path)
-      } catch (error) {
-        expect(path.buildCodeFrameError).toHaveBeenCalledWith(
-          'Function _ must have a String literal for argument #1, found Identifier instead!')
-        done()
-      }
-    })
   })
 
   describe('#validateComponentEntry', () => {
