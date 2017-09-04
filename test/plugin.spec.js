@@ -103,6 +103,15 @@ describe('plugin', () => {
         assertHasSingularEntry(po, 'Hey {name}!')
         assertNumberOfEntries(po, 1)
       })
+
+      it('should extract concatenated strings', () => {
+        transform(`
+          _nc('1' + (' flag'), ('Many' + ' flags') + (', many' + ' flags'), 5, 'Physical' + ' Object')
+        `, OPTIONS)
+        const po = poParser.parse(fs.readFileSync(TESTPO))
+        assertHasPluralContextEntry(po, '1 flag', 'Many flags, many flags', 'Physical Object')
+        assertNumberOfEntries(po, 1)
+      })
     })
   })
 
