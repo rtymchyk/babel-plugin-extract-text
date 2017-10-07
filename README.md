@@ -105,7 +105,7 @@ msgstr ""
 You can use my other library [react-translations](https://www.npmjs.com/package/react-translations), which plays nicely with this babel plugin. Otherwise you'll need to build out these components and hook them up to a basic gettext client such as [Jed](https://www.npmjs.com/package/jed).
 
 ## Motivation
-1. <strong>Why not use ICU Message Format?</strong>
+1. <strong>Why not use ICU MessageFormat?</strong>
 
   ICU patterns strings, while pretty powerful, can become clunkly very fast. Gettext style strings should be enough to cover the typical use cases and are easy to use and understand. More importantly, ICU strings are not always supported by translators and translation providers, whereas the PO format is a de facto standard.
 
