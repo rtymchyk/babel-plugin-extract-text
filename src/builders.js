@@ -27,8 +27,7 @@ const DEFAULT_HEADERS = {
   language: 'en_US',
 }
 
-function buildSingularEntry (args, types, path, state) {
-  const func = getSingularFunction(state)
+function buildSingularEntry (args, types, path, func) {
   const msgid = args[func.singular]
 
   return {
@@ -36,8 +35,7 @@ function buildSingularEntry (args, types, path, state) {
   }
 }
 
-function buildSingularContextEntry (args, types, path, state) {
-  const func = getSingularContextFunction(state)
+function buildSingularContextEntry (args, types, path, func) {
   const msgid = args[func.singular]
   const msgctxt = args[func.context]
 
@@ -47,8 +45,7 @@ function buildSingularContextEntry (args, types, path, state) {
   }
 }
 
-function buildPluralEntry (args, types, path, state) {
-  const func = getPluralFunction(state)
+function buildPluralEntry (args, types, path, func) {
   const msgid = args[func.singular]
   const msgid_plural = args[func.plural]
 
@@ -58,8 +55,7 @@ function buildPluralEntry (args, types, path, state) {
   }
 }
 
-function buildPluralContextEntry (args, types, path, state) {
-  const func = getPluralContextFunction(state)
+function buildPluralContextEntry (args, types, path, func) {
   const msgid = args[func.singular]
   const msgid_plural = args[func.plural]
   const msgctxt = args[func.context]
@@ -127,21 +123,33 @@ module.exports = {
     const args = path.node.arguments
     const callee = path.node.callee.name
     let entry
+    let func
 
-    switch (callee) {
-      case getSingularFunction(state).name:
-        entry = buildSingularEntry(args, types, path, state); break
-      case getSingularContextFunction(state).name:
-        entry = buildSingularContextEntry(args, types, path, state); break
-      case getPluralFunction(state).name:
-        entry = buildPluralEntry(args, types, path, state); break
-      case getPluralContextFunction(state).name:
-        entry = buildPluralContextEntry(args, types, path, state); break
-      default:
-        break
+    func = getSingularFunction(state, callee)
+    if (func) {
+      entry = buildSingularEntry(args, types, path, func)
+      return buildReference(entry, state)
     }
 
-    return buildReference(entry, state)
+    func = getSingularContextFunction(state, callee)
+    if (func) {
+      entry = buildSingularContextEntry(args, types, path, func)
+      return buildReference(entry, state)
+    }
+
+    func = getPluralFunction(state, callee)
+    if (func) {
+      entry = buildPluralEntry(args, types, path, func)
+      return buildReference(entry, state)
+    }
+
+    func = getPluralContextFunction(state, callee)
+    if (func) {
+      entry = buildPluralContextEntry(args, types, path, func)
+      return buildReference(entry, state)
+    }
+
+    return entry
   },
 
   buildJSXElementEntry (types, path, state) {
