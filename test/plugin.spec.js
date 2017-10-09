@@ -115,11 +115,11 @@ describe('plugin', () => {
     })
   })
 
-  describe('CallExpression in two or more different variants',() => {
+  describe('CallExpression in two or more different variants', () => {
     const options = {
       plugins: [
         'syntax-jsx',
-        ['./plugin.js', { 
+        ['./plugin.js', {
           outputFile: TESTPO,
           function: [
             {
@@ -150,7 +150,7 @@ describe('plugin', () => {
               name: 'pgettext',
               singular: 1,
               context: 0,
-            },  {
+            }, {
               type: 'PLURAL_CONTEXT',
               name: '_nc',
               singular: 0,
@@ -162,10 +162,10 @@ describe('plugin', () => {
               singular: 1,
               plural: 2,
               context: 0,
-            }]
+            }],
         }],
       ],
-    };
+    }
 
     it('should extract 1 singular string', () => {
       transform("_('Hello World!'); gettext('Hello gettext!')", options)
@@ -187,7 +187,7 @@ describe('plugin', () => {
       transform("_c('Flag', 'Object'); pgettext('control', 'Save')", options)
       const po = poParser.parse(fs.readFileSync(TESTPO))
       assertHasSingularContextEntry(po, 'Flag', 'Object')
-      assertHasSingularContextEntry(po, 'Save', 'control')      
+      assertHasSingularContextEntry(po, 'Save', 'control')
       assertNumberOfEntries(po, 2)
     })
 
