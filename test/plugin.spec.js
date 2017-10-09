@@ -167,7 +167,7 @@ describe('plugin', () => {
       ],
     }
 
-    it('should extract 1 singular string', () => {
+    it('should extract from two similar singular function', () => {
       transform("_('Hello World!'); gettext('Hello gettext!')", options)
       const po = poParser.parse(fs.readFileSync(TESTPO))
       assertHasSingularEntry(po, 'Hello World!')
@@ -175,7 +175,7 @@ describe('plugin', () => {
       assertNumberOfEntries(po, 2)
     })
 
-    it('should extract 1 singular/plural string ', () => {
+    it('should extract from two similar singular/plural function', () => {
       transform("_n('One', 'Many', 5); ngettext('apple', 'apples', 3)", options)
       const po = poParser.parse(fs.readFileSync(TESTPO))
       assertHasPluralEntry(po, 'One', 'Many')
@@ -183,7 +183,7 @@ describe('plugin', () => {
       assertNumberOfEntries(po, 2)
     })
 
-    it('should extract 1 singular string with context', () => {
+    it('should extract from two similar singular/context function', () => {
       transform("_c('Flag', 'Object'); pgettext('control', 'Save')", options)
       const po = poParser.parse(fs.readFileSync(TESTPO))
       assertHasSingularContextEntry(po, 'Flag', 'Object')
@@ -191,7 +191,7 @@ describe('plugin', () => {
       assertNumberOfEntries(po, 2)
     })
 
-    it('should extract 1 singular/plural string with context', () => {
+    it('should extract from two similar singular/plural/context function', () => {
       transform(`_nc('1 flag', 'Many flags', 5, 'Object');
         npgettext('basket', 'apple', 'apples', 3);
       `, options)
