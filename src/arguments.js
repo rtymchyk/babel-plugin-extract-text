@@ -46,15 +46,17 @@ function getComponentOptions (state) {
 }
 
 module.exports = {
-  getSingularFunction: state => getFunctionOptions(state).filter(func => func.type === SINGULAR)[0],
+  getSingularFunction: (state, funcName) =>
+    getFunctionOptions(state).find(func => func.type === SINGULAR && func.name === funcName),
 
-  getPluralFunction: state => getFunctionOptions(state).filter(func => func.type === PLURAL)[0],
+  getPluralFunction: (state, funcName) =>
+    getFunctionOptions(state).find(func => func.type === PLURAL && func.name === funcName),
 
-  getSingularContextFunction: state => getFunctionOptions(state)
-    .filter(func => func.type === SINGULAR_CONTEXT)[0],
+  getSingularContextFunction: (state, funcName) =>
+    getFunctionOptions(state).find(func => func.type === SINGULAR_CONTEXT && func.name === funcName),
 
-  getPluralContextFunction: state => getFunctionOptions(state)
-    .filter(func => func.type === PLURAL_CONTEXT)[0],
+  getPluralContextFunction: (state, funcName) =>
+    getFunctionOptions(state).find(func => func.type === PLURAL_CONTEXT && func.name === funcName),
 
   getComponentName: state => getComponentOptions(state).name,
 

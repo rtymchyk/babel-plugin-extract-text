@@ -50,7 +50,7 @@ describe('arguments', () => {
     ].forEach((func) => {
       describe(`#${func.name}`, () => {
         it('returns default function name if not defined', () => {
-          expect(func({}).name).toBe(DEFAULT_FUNCTIONS[func.name])
+          expect(func({}, DEFAULT_FUNCTIONS[func.name]).name).toBe(DEFAULT_FUNCTIONS[func.name])
         })
 
         it('returns custom function name if defined', () => {
@@ -72,7 +72,7 @@ describe('arguments', () => {
                 },
               ],
             },
-          }).name).toBe(CUSTOM_FUNCTIONS[func.name])
+          }, CUSTOM_FUNCTIONS[func.name]).name).toBe(CUSTOM_FUNCTIONS[func.name])
         })
       })
     });
