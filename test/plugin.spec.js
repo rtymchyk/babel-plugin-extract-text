@@ -115,6 +115,93 @@ describe('plugin', () => {
     })
   })
 
+  describe('CallExpression in two or more different variants',() => {
+    const options = {
+      plugins: [
+        'syntax-jsx',
+        ['./plugin.js', { 
+          outputFile: TESTPO,
+          function: [
+            {
+              type: 'SINGULAR',
+              name: '_',
+              singular: 0,
+            }, {
+              type: 'SINGULAR',
+              name: 'gettext',
+              singular: 0,
+            }, {
+              type: 'PLURAL',
+              name: '_n',
+              singular: 0,
+              plural: 1,
+            }, {
+              type: 'PLURAL',
+              name: 'ngettext',
+              singular: 0,
+              plural: 1,
+            }, {
+              type: 'SINGULAR_CONTEXT',
+              name: '_c',
+              singular: 0,
+              context: 1,
+            }, {
+              type: 'SINGULAR_CONTEXT',
+              name: 'pgettext',
+              singular: 1,
+              context: 0,
+            },  {
+              type: 'PLURAL_CONTEXT',
+              name: '_nc',
+              singular: 0,
+              plural: 1,
+              context: 3,
+            }, {
+              type: 'PLURAL_CONTEXT',
+              name: 'npgettext',
+              singular: 1,
+              plural: 2,
+              context: 0,
+            }]
+        }],
+      ],
+    };
+
+    it('should extract 1 singular string', () => {
+      transform("_('Hello World!'); gettext('Hello gettext!')", options)
+      const po = poParser.parse(fs.readFileSync(TESTPO))
+      assertHasSingularEntry(po, 'Hello World!')
+      assertHasSingularEntry(po, 'Hello gettext!')
+      assertNumberOfEntries(po, 2)
+    })
+
+    it('should extract 1 singular/plural string ', () => {
+      transform("_n('One', 'Many', 5); ngettext('apple', 'apples', 3)", options)
+      const po = poParser.parse(fs.readFileSync(TESTPO))
+      assertHasPluralEntry(po, 'One', 'Many')
+      assertHasPluralEntry(po, 'apple', 'apples')
+      assertNumberOfEntries(po, 2)
+    })
+
+    it('should extract 1 singular string with context', () => {
+      transform("_c('Flag', 'Object'); pgettext('control', 'Save')", options)
+      const po = poParser.parse(fs.readFileSync(TESTPO))
+      assertHasSingularContextEntry(po, 'Flag', 'Object')
+      assertHasSingularContextEntry(po, 'Save', 'control')      
+      assertNumberOfEntries(po, 2)
+    })
+
+    it('should extract 1 singular/plural string with context', () => {
+      transform(`_nc('1 flag', 'Many flags', 5, 'Object');
+        npgettext('basket', 'apple', 'apples', 3);
+      `, options)
+      const po = poParser.parse(fs.readFileSync(TESTPO))
+      assertHasPluralContextEntry(po, '1 flag', 'Many flags', 'Object')
+      assertHasPluralContextEntry(po, 'apple', 'apples', 'basket')
+      assertNumberOfEntries(po, 2)
+    })
+  })
+
   describe('Configuration', () => {
     it('JSXElement', () => {
       transform(
