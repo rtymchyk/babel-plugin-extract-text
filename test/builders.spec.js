@@ -345,7 +345,7 @@ describe('builders', () => {
         Object.assign({}, state, {
           opts: {
             includeReference: true,
-            baseDir: 'project',
+            baseReferenceDir: 'project',
           },
         }))
 
@@ -359,7 +359,7 @@ describe('builders', () => {
           includeReference: true,
           opts: {
             includeReference: true,
-            baseDir: 'x',
+            baseReferenceDir: 'x',
           },
         }))
 

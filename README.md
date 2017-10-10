@@ -25,9 +25,10 @@ In a babel configuration, add both plugins and set the options
 
 #### Options
 This plugin allows a number of configurations to be passed:
-- `outputFile`: Output PO file (default `strings.po`)
+- `outputFile`: Output PO file name (default is the current file being processed or `strings.po` as a fallback)
+- `outputDir`: Output directory (default is dir of the current file being processed)
 - `includeReference`: Whether to include a file reference for PO entries (default `false`)
-- `baseDir`: Root directory of project. Everything up to and including this will be stripped from entry references.
+- `baseReferenceDir`: Root directory of project. Everything up to and including this will be stripped from entry references.
 - `charset`: Character set for the PO (default `UTF-8`)
 - `headers`: Object indicating all PO headers to include. See the default headers [here](https://github.com/rtymchyk/babel-plugin-extract-text/blob/master/src/builders.js#L24).
 - `component`/`function`: Objects customizing the extraction for component/function respectively. This includes the React component name to look for, the function names, and so on. See the default configuration [here](https://github.com/rtymchyk/babel-plugin-extract-text/blob/master/src/arguments.js).

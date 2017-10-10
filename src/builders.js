@@ -99,15 +99,15 @@ function mergeTranslation (existingTranslation, newTranslation) {
 function buildReference (entry, state) {
   if (entry && state.opts.includeReference) {
     const rawFilename = state.file.opts.filename
-    const baseDirRaw = state.opts.baseDir
+    const baseReferenceDirRaw = state.opts.baseReferenceDir
 
-    if (baseDirRaw) {
-      const baseDir = `/${baseDirRaw.replace('/', '')}/`
-      const baseDirIndex = rawFilename.indexOf(baseDir)
+    if (baseReferenceDirRaw) {
+      const baseReferenceDir = `/${baseReferenceDirRaw.replace('/', '')}/`
+      const baseReferenceDirIndex = rawFilename.indexOf(baseReferenceDir)
 
-      if (baseDirIndex !== -1) {
+      if (baseReferenceDirIndex !== -1) {
         entry.reference = rawFilename.substr(
-          baseDirIndex + baseDir.length, rawFilename.length)
+          baseReferenceDirIndex + baseReferenceDir.length, rawFilename.length)
         return entry
       }
     }
