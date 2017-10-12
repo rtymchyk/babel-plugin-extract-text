@@ -17,28 +17,38 @@ const DEFAULTS = {
       type: SINGULAR,
       name: '_',
       singular: 0,
+      validate: true,
     }, {
       type: PLURAL,
       name: '_n',
       singular: 0,
       plural: 1,
+      validate: true,
     }, {
       type: SINGULAR_CONTEXT,
       name: '_c',
       singular: 0,
       context: 1,
+      validate: true,
     }, {
       type: PLURAL_CONTEXT,
       name: '_nc',
       singular: 0,
       plural: 1,
       context: 3,
+      validate: true,
     },
   ],
 }
 
 function getFunctionOptions (state) {
-  return Object.assign({}, DEFAULTS, state.opts).function
+  const opts = Object.assign({}, DEFAULTS, state.opts)
+  opts.function.forEach(f => {
+    if (!f.hasOwnProperty('validate')) {
+      f.validate = true
+    }
+  })
+  return opts.function
 }
 
 function getComponentOptions (state) {
