@@ -40,7 +40,7 @@ const babel = require('babel-core');
 babel.transformFile('someCode.js', {
   plugins: [
     'syntax-jsx',
-    ['babel-plugin-extract-text', {
+    ['extract-text', {
       outputFile: 'en-US.po',
       includeReference: true,
       headers: {
