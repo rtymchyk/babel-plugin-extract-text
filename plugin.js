@@ -3,7 +3,7 @@ const gettextParser = require('gettext-parser')
 const fs = require('fs')
 
 const PLUGIN_KEY = process.env.NODE_ENV === 'test'
-  ? './plugin.js' : 'babel-plugin-extract-text'
+  ? './plugin.js' : 'extract-text'
 const DEFAULT_OUTPUT_FILE = 'strings.po'
 
 const {
