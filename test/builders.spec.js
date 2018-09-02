@@ -88,6 +88,51 @@ describe('builders', () => {
         msgctxt: 'Some context',
       })
     })
+
+    it('raises error if extraction fails on entry', () => {
+      const path = {
+        node: {
+          callee: { name: '_' },
+          arguments: [{ value: 'id', type: 'Identifier' }],
+        },
+        buildCodeFrameError: jest.fn((msg) => new Error(msg)),
+      }
+      const types = {
+        isStringLiteral: jest.fn(() => false),
+        isBinaryExpression: jest.fn(() => false),
+      }
+
+      expect(() => buildCallExpressionEntry(types, path, state)).toThrow(/string literal/i)
+    })
+
+    it('ignores error if extraction fails on entry and ignoreError config is set', () => {
+      const path = {
+        node: {
+          callee: { name: '_', ignoreError: true },
+          arguments: [{ value: 'id', type: 'Identifier' }],
+        },
+        buildCodeFrameError: jest.fn((msg) => new Error(msg)),
+      }
+      const types = {
+        isStringLiteral: jest.fn(() => false),
+        isBinaryExpression: jest.fn(() => false),
+      }
+      expect(() => {
+        const entry = buildCallExpressionEntry(types, path, Object.assign({}, state, {
+          opts: {
+            function: [
+              {
+                type: 'SINGULAR',
+                name: '_',
+                singular: 0,
+                ignoreError: true,
+              },
+            ],
+          },
+        }))
+        expect(entry).toBeUndefined()
+      }).not.toThrow()
+    })
   })
 
   describe('#buildJSXElementEntry', () => {

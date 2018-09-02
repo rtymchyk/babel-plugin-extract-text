@@ -124,32 +124,34 @@ module.exports = {
     const callee = path.node.callee.name
     let entry
     let func
+    try {
+      func = getSingularFunction(state, callee)
+      if (func) {
+        entry = buildSingularEntry(args, types, path, func)
+        return buildReference(entry, state)
+      }
 
-    func = getSingularFunction(state, callee)
-    if (func) {
-      entry = buildSingularEntry(args, types, path, func)
-      return buildReference(entry, state)
+      func = getSingularContextFunction(state, callee)
+      if (func) {
+        entry = buildSingularContextEntry(args, types, path, func)
+        return buildReference(entry, state)
+      }
+
+      func = getPluralFunction(state, callee)
+      if (func) {
+        entry = buildPluralEntry(args, types, path, func)
+        return buildReference(entry, state)
+      }
+
+      func = getPluralContextFunction(state, callee)
+      if (func) {
+        entry = buildPluralContextEntry(args, types, path, func)
+        return buildReference(entry, state)
+      }
+    } catch (error) {
+      if (!func) throw error
+      if (!func.ignoreError) throw error
     }
-
-    func = getSingularContextFunction(state, callee)
-    if (func) {
-      entry = buildSingularContextEntry(args, types, path, func)
-      return buildReference(entry, state)
-    }
-
-    func = getPluralFunction(state, callee)
-    if (func) {
-      entry = buildPluralEntry(args, types, path, func)
-      return buildReference(entry, state)
-    }
-
-    func = getPluralContextFunction(state, callee)
-    if (func) {
-      entry = buildPluralContextEntry(args, types, path, func)
-      return buildReference(entry, state)
-    }
-
-    return entry
   },
 
   buildJSXElementEntry (types, path, state) {

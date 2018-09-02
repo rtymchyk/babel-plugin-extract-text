@@ -17,22 +17,26 @@ const DEFAULTS = {
       type: SINGULAR,
       name: '_',
       singular: 0,
+      ignoreError: false,
     }, {
       type: PLURAL,
       name: '_n',
       singular: 0,
       plural: 1,
+      ignoreError: false,
     }, {
       type: SINGULAR_CONTEXT,
       name: '_c',
       singular: 0,
       context: 1,
+      ignoreError: false,
     }, {
       type: PLURAL_CONTEXT,
       name: '_nc',
       singular: 0,
       plural: 1,
       context: 3,
+      ignoreError: false,
     },
   ],
 }
