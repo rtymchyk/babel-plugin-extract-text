@@ -20,7 +20,6 @@ const OPTIONS = {
 
 describe('plugin', () => {
   afterEach(() => {
-    jest.resetModules()
     if (fs.existsSync(TESTPO)) {
       fs.unlinkSync(TESTPO)
     }
