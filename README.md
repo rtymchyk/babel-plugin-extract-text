@@ -36,7 +36,7 @@ This plugin allows a number of configurations to be passed:
 ## Example
 Plugin Configuration
 ```javascript
-const babel = require('babel-core');
+const babel = require('babel-core')
 
 babel.transformFile('someCode.js', {
   plugins: [
@@ -56,7 +56,7 @@ babel.transformFile('someCode.js', {
       },
     }],
   ],
-});
+}, (error) => error ? console.log(error) : console.log('Done!'))
 ```
 
 Input (`someCode.js`)
@@ -72,7 +72,7 @@ Input (`someCode.js`)
 // Shortform style, using gettext function directly
 <Message i18n={_('Hello World')} />
 
-_c('Flag', 'Physical Object');
+_c('Flag', 'Physical Object')
  ```
 
 Output (`someCode.js.po`)
