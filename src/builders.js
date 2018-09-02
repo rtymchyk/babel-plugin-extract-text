@@ -150,9 +150,8 @@ module.exports = {
       }
     } catch (error) {
       if (!func) throw error
-      if (func.validate) throw error
+      if (!func.ignoreError) throw error
     }
-    return entry
   },
 
   buildJSXElementEntry (types, path, state) {
