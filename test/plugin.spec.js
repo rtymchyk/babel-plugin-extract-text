@@ -1,4 +1,4 @@
-import { transform } from 'babel-core'
+import { transform } from '@babel/core'
 import fs from 'fs'
 import { po as poParser } from 'gettext-parser'
 
@@ -13,7 +13,7 @@ import {
 const TESTPO = 'test.po'
 const OPTIONS = {
   plugins: [
-    'syntax-jsx',
+    '@babel/syntax-jsx',
     ['./plugin.js', { outputFile: TESTPO }],
   ],
 }
@@ -117,7 +117,7 @@ describe('plugin', () => {
   describe('CallExpression in two or more different variants', () => {
     const options = {
       plugins: [
-        'syntax-jsx',
+        '@babel/syntax-jsx',
         ['./plugin.js', {
           outputFile: TESTPO,
           function: [
@@ -207,7 +207,7 @@ describe('plugin', () => {
         '<Msg msgid="1 Cat" msgid_plural="Many Cats" msgctxt="SomeContext"/>',
         {
           plugins: [
-            'syntax-jsx',
+            '@babel/syntax-jsx',
             ['./plugin.js', {
               outputFile: TESTPO,
               component: {
@@ -234,7 +234,7 @@ describe('plugin', () => {
           msgpc(locale, 'One', 'Many', 5, 'People');
         `,
         {
-          plugins: ['syntax-jsx',
+          plugins: ['@babel/syntax-jsx',
             ['./plugin.js', {
               outputFile: TESTPO,
               function: [

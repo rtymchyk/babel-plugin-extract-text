@@ -16,11 +16,11 @@ Babel plugin to extract strings from React components and gettext-like functions
 ## Setup
 Begin with installing this plugin and the JSX plugin for Babel
 ```
-npm install babel-plugin-extract-text babel-plugin-syntax-jsx
+yarn add --dev babel-plugin-extract-text @babel/syntax-jsx
 ```
 In a babel configuration, add both plugins and set the options
 ```
-{ plugins: ['syntax-jsx', ['extract-text', { ... options ... }]] }
+{ plugins: ['@babel/syntax-jsx', ['extract-text', { ... options ... }]] }
 ```
 
 #### Options
@@ -40,7 +40,7 @@ const babel = require('babel-core')
 
 babel.transformFile('someCode.js', {
   plugins: [
-    'syntax-jsx',
+    '@babel/syntax-jsx',
     ['extract-text', {
       includeReference: true,
       headers: {
